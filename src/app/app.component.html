@@ -1,0 +1,192 @@
+<div class="jumbotron" id="mainHeader">
+  <div class="container-fluid">
+    <div class="row" style="margin:none;">
+      <div class="col-md-3">
+        <p>Users Online</p>
+      </div>
+      <div class="col-md-6">
+        <a [routerLink]="['/']"><img class="img-responsive" src="../assets/images/logo.png" alt="Cranked Logo" id="logo"></a>
+      </div>
+      <div class="col-md-3 hidden-xs" id="user">
+        <div *ngIf="!userLogged"><a href="auth/steam">Login</a></div>
+        <div *ngIf="userLogged" class="dropdown">
+          <a href="#" data-toggle="dropdown" class="dropdown-toggle">   {{user.username}}  <img  src={{user.avatarUrl.value}} alt="" height="25px" width="25px"> <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a [routerLink]="['/account']" href="#">Account</a></li>
+            <li><a [routerLink]="['/wins']" href="#">Wins</a></li>
+            <li><a [routerLink]="['/tokens']">Get Tokens</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="logout">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row hidden-xs" >
+      <div class="text-center">
+        <ul class="list-inline">
+          <li><a [routerLink]="['/terms-of-service']" >Terms of Service</a></li>
+          <li><a [routerLink]="['/about']">About</a></li>
+          <li><a [routerLink]="['/faq']">FAQ</a></li>
+          <li><a [routerLink]="['/support']">Support</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row hidden-xs">
+      <div class="text-center">
+        <ul class="list-inline">
+          <li><a >Free Tokens</a></li>
+          <li><a >Get Tokens</a></li>
+          <li><a [routerLink]="['/listings']">Listings</a></li>
+          <li><a [routerLink]="['/affiliates']">Affiliates</a></li>
+          <li><a [routerLink]="['/leaderboard']">Leaderboard</a></li>
+          <li><a [routerLink]="['/micro']">Auctions</a></li>
+          <li *ngIf="user.userid && user.hasAccess" ><a [routerLink]="['/admin']">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-bar-collapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        </div>
+        <div class="visible-xs">
+          <div class="collapse navbar-collapse" id="nav-bar-collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="">Free Tokens</a></li>
+              <li><a href="">Get Tokens</a></li>
+              <li><a href="">Listings</a></li>
+              <li><a href="">Affiliates</a></li>
+              <li><a href="">Leaderboard</a></li>
+              <li><a [routerLink]="['/micro']">Auctions</a></li>
+              <li *ngIf="user.userid && user.hasAccess"><a [routerLink]="['/admin']">Admin</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li *ngIf="!userLogged"><a href="auth/steam">Login</a></li>
+              <li *ngIf="userLogged" class="dropdown">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle"> <img src={{user.avatarUrl.value}} alt="" height="25px" width="25px">{{user.username}} <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Account</a></li>
+                  <li><a [routerLink]="['/bids']">Get Bids</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="logout">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+      </div>
+    </nav>
+    <div class="text-center">
+      <ul class="list-inline" id="rolers">
+        <li (click)="user.highRoller = false" [ngClass]="{'roller-selected' : !user.highRoller}">
+          <a>
+            <h3>Low Rollers</h3>
+          </a>
+        </li>
+        <li (click)="user.highRoller = true" [ngClass]="{'roller-selected' : user.highRoller}">
+          <a>
+            <h3>High Rollers</h3>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <h4 id="balence" *ngIf="user.userid"> Balence {{user.tokens}} Tokens
+      <img *ngIf='user.tokens > 1400' src="../assets/images/topSmile.ico" height="20" width="20">
+      <img *ngIf='user.tokens >= 500 && user.tokens < 1400' src="../assets/images/smile.png" height="20" width="20">
+      <img *ngIf='user.tokens >= 250 && user.tokens < 500' src="../assets/images/flat.png" height="20" width="20">
+      <img *ngIf='user.tokens >= 5 && user.tokens < 250' src="../assets/images/frown.png" height="20" width="20">
+      <img *ngIf='user.tokens < 5' src="../assets/images/frown.png" height="20" width="20">
+    </h4>
+  </div>
+</div>
+
+<div id="tradeURLModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <p>Plese Enter Your Steam Trade URL</p>
+        <input type="text" [(ngModel)]="tradeUrl">
+        <p *ngIf="tradeUrlInvalid">Invalid Trade URL</p>
+      </div>[hidden]="true"
+      <div class="modal-footer ">
+        <ul class="list-inline text-center">
+          <li>
+            <button type="button" class="btn btn-success"  data-dismiss="modal" (click)="updateUrl()">Confirm</button>
+          </li>
+          <li>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Back</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="openWinModal" [hidden]="true" data-toggle="modal" data-target="#winModal"></button>
+<div id="winModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div *ngIf="auctionWon" class="modal-body text-center">
+        <p>Congratulations {{user.username}} ! you won a {{auctionWon.name}}</p>
+        <p>You just got a damm good deal</p>
+      </div>
+      <div class="modal-footer">
+        <div class="col-md-12 text-center">
+          <button type="button" class="btn btn-success"  data-dismiss='modal'>Keep your skin</button>
+          <button type="button" class="btn btn-success" (click)="listShow()" data-dismiss='modal'>List for real profit</button>
+          <button type="button" class="btn btn-success"  data-dismiss='modal'>Convert to tokens</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="openListModal" [hidden]="true" data-toggle="modal" data-target="#listModal"></button>
+<div id="listModal" class="modal fade" role="dialog">
+  <div *ngIf="auctionWon" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <p>{{auctionWon.auction.name}}</p>
+        <p>Profit will be sent to your PayPal Email</p>
+        <p>{{auctionWon.auction.price}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss='modal' (click)="listAuction()">List Auction</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="openListSuccessModal" [hidden]="true" data-toggle="modal" data-target="#listSuccessModal"></button>
+<div id="listSuccessModal" class="modal fade" role="dialog">
+  <div *ngIf="auctionWon" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+        <p>Success!! <a [routerLink]="['/listings']">View Listing</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="footer-popups col-md-offset-3 col-md-6 ">
+    <div class="text-center" *ngIf="user.userid && !user.tradeUrl">
+      To collect your winnings, you'll need to provide us with your <a href="https://steamcommunity.com/id/me/tradeoffers/privacy" >Steam Trade URL</a> input it <a data-toggle="modal" data-target="#tradeURLModal" >here</a> <i (click)="user.tradeUrl = true" class="fa fa-times" aria-hidden="true"></i>
+    </div>
+    <div class="text-center" *ngIf="showCookies">
+        By using our site you are consenting to our use of cookies in accordance with our <a [routerLink]="['/cookie-policy']" >Cookie Policy</a> <i (click)="hideCookiePolicy()" class="fa fa-times" aria-hidden="true"></i>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

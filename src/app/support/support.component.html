@@ -1,0 +1,106 @@
+<div *ngIf="!viewTicket" class="container">
+  <p>
+    <strong>Please read below before submitting a ticket.</strong>
+  </p>
+  <br>
+  <p>Here are some possible (though uncommon) issues you may encounter:</p>
+  <ul style="list-style-type:none">
+    <li>
+      - I did not receive tokens for my skins! First of all, please wait 15 minutes and refresh the page periodically. If the offer
+      was accepted and the tokens are still not there, please make sure you have Steam Guard Mobile Authenticator enabled.
+      If it is not, your trade will be held in escrow for 15 days before it is sent to us (Steams rules, not ours :( You
+      can still cancel the trade).
+    </li>
+    <br>
+    <li>
+      - I won an auction and decided to keep my skin, but did not recieve a trade offer! Please provide screenshots, the auction
+      ID, the time of the auction, and the item type, along with your Steam profile for best chance of recovery.
+    </li>
+    <br>
+    <li>
+      - I cannot redeem my promo coins! You either do not have 8 hours played on CSGO or it has been less than 24 hours since you
+      made your account.
+    </li>
+    <br>
+    <li>
+      - Can I be sponsored by CSGOCranked? We will only consider sponsoring channels that get 5k+ views per video. Please contact
+      us on info@csgocranked.com, or via Twitter @CSGOCranked for more information if you qualify.
+    </li>
+    <br>
+    <li>
+      - Why am I getting an error when making a skin deposit? It's possible the Steam network is down. Please be patient and remake
+      the request again later.
+    </li>
+    <br>
+    <li>
+      - Have a question that wasn't answered above? Create a support ticket and we'll respond as quickly as possible.
+    </li>
+  </ul>
+  <br>
+  <div class="row text-center">
+    <button *ngIf="user.userid" data-toggle="modal" data-target="#addTicket" class="btn btn-success" >Create Ticket</button>
+    <button *ngIf="!user.userid" data-toggle="modal" class="btn disabled" disabled>Create Ticket</button>
+  </div>
+</div>
+
+<app-ticket-view *ngIf="viewTicket" (viewChange)="goBack()" [selectTicket]="selectTicket"></app-ticket-view>
+
+<div class="modal fade" id="addTicket" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">Add New Support Ticket</h4>
+      </div>
+      <div class="modal-body">
+        <form #ticketForm="ngForm">
+          <select [(ngModel)]="department" class="form-control" required name="department">
+            <option value="" disabled selected>Select Department</option>
+            <option *ngFor="let department of departments" [selected]="department">{{department}}</option>
+          </select>
+          <input type="text" [(ngModel)]="email" id="email" class="form-control" placeholder="Your Email" required name="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+          <input type="text" [(ngModel)]="subject" class="form-control" placeholder="Subject" required name="subject">
+          <textarea name="message" class="form-control" [(ngModel)]="message" placeholder="Message" cols="30" rows="8" required name="message"></textarea>
+          <p *ngFor="let file of fileNames; let i = index">
+              {{file}}  <i class="fa fa-times-circle" (click)="removeFile(file,i+1)" aria-hidden="true"></i>
+          </p>
+          <p *ngIf="invalidFile">
+            File upload must be PNG or JPEG
+          </p>
+          <p *ngIf="fileOversize">
+            File must be less than 5MB
+          </p>
+          <ul class="list-inline" style="margin-top:2%;">
+            <li>
+              <button data-dismiss="modal" (click)="submit()" class="btn btn-success" [disabled]="!ticketForm.form.valid">Add Ticket</button>
+            </li>
+            <li>
+              <div class="form-group">
+                <label class="btn btn-success" id="uploadButton">
+                  <i class="fa fa-paperclip"></i> Upload
+                  <input class="hidden" (change)="fileAdd($event.target.files)" type="file" #fileUpload id="file">
+                </label>
+              </div>
+            </li>
+          </ul>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="ticketCreatedButton" [hidden]="true" data-toggle="modal" data-target="#ticketCreated"></button>
+<div id="ticketCreated" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 modal-content square-popup text-center">
+          <div>Ticket created successfully. You can view your
+              ticket on your 'Accounts' page. A copy has been
+              sent to your email address.
+              We'll get back to you as soon as possible :)</div>
+          <button type="button" (click)="viewTicket = true" class="btn btn-success" data-dismiss='modal'>View Ticket</button>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+  </div>
+</div>

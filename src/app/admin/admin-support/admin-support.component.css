@@ -1,0 +1,44 @@
+.adminTabs{
+    margin-bottom: 15px;
+    margin-top: 15px; 
+    border: none;
+}
+.adminTabs li a{
+    color: #777;
+    
+}
+.adminTabs li a:hover{
+    color: #ffffff;
+    background-color:transparent;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.text-area{
+    border: 1px solid #000000;
+    background-color: #363636;
+    min-height: 100px;
+    margin-bottom: 2%;
+}
+
+.staffMes{
+    border-color: #01E5A8;
+}
+#reply-text{
+    border: 1px solid #000000;
+    background-color: #363636;
+    color: #777;
+    height: 150px;
+    width: 70%;
+}
+.reply .row{
+    margin-bottom: 2%;
+}
+.reply button{
+    width: 40%;
+}
+#uploadButton{
+    width: 40%;
+    margin-bottom: 2%;
+}

@@ -1,0 +1,111 @@
+
+<div class="text-center">
+  <ul class="list-inline adminTabs">
+    <li [routerLink]="['/admin']"><a>Bot Inventory</a></li>
+    <li [routerLink]="['/admin/op-skins']"><a>OPSkins Inventory</a></li>
+    <li [routerLink]="['/admin/remove']"><a>Remove Auction</a></li>
+    <li [routerLink]="['/admin/support']" ><a>Support Tickets</a></li>
+    <li [routerLink]="['/admin/listings']"><a>Listings</a></li>
+    <li [routerLink]="['/admin/user-list']"><a >User List</a></li>
+  </ul>
+</div>
+
+<div *ngIf="listView" class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th (click)="sort('ticketNum')">Ticket
+          <i class="fa" [ngClass]="{'fa-sort': column != 'ticketNum', 'fa-sort-asc': (column == 'ticketNum' && isDesc), 'fa-sort-desc': (column == 'ticketNum' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('department')">Department
+          <i class="fa" [ngClass]="{'fa-sort': column != 'department', 'fa-sort-asc': (column == 'department' && isDesc), 'fa-sort-desc': (column == 'department' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('dateCreated')">Date Created
+          <i class="fa" [ngClass]="{'fa-sort': column != 'dateCreated', 'fa-sort-asc': (column == 'dateCreated' && isDesc), 'fa-sort-desc': (column == 'dateCreated' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('lastUpdatedDiff')">Updated
+          <i class="fa" [ngClass]="{'fa-sort': column != 'lastUpdatedDiff', 'fa-sort-asc': (column == 'lastUpdatedDiff' && isDesc), 'fa-sort-desc': (column == 'lastUpdatedDiff' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('status')">Status
+          <i class="fa" [ngClass]="{'fa-sort': column != 'status', 'fa-sort-asc': (column == 'status' && isDesc), 'fa-sort-desc': (column == 'status' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('subject')">Subject
+          <i class="fa" [ngClass]="{'fa-sort': column != 'subject', 'fa-sort-asc': (column == 'subject' && isDesc), 'fa-sort-desc': (column == 'subject' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ticket of records |  orderBy: {property: column, direction: direction}" (click)="selectTic(ticket)">
+        <td>{{ticket.ticketNum}}</td>
+        <td>{{ticket.department}}</td>
+        <td>{{ticket.dateCreated}}</td>
+        <td [hidden]="ticket.lastUpdatedDiff > 1440">{{this.Math.ceil(ticket.lastUpdatedDiff / 60 )}} hours ago</td>
+        <td [hidden]="ticket.lastUpdatedDiff < 1440">{{this.Math.ceil(ticket.lastUpdatedDiff / 1440 )}} days ago </td>
+        <td>{{ticket.status}}</td>
+        <td>{{ticket.subject}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="!listView" class="container">
+  <div class="row">
+    <div class="col-md-4 reply ">
+      <div class="row">
+        <button class="btn btn-default" (click)="listView = true"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Go Back to list</button>
+      </div>
+      <div class="row">
+        <strong>Status:</strong>
+        <p>{{selectTicket.status}}</p>
+        <strong>Department:</strong>
+        <p>{{selectTicket.department}}</p>
+        <strong>Ticket Opened:</strong>
+        <p>{{selectTicket.dateCreated}}</p>
+        <strong>Last Updated:</strong>
+        <p>{{selectTicket.lastUpdatedFormated}}</p>
+      </div>
+      <div class="row">
+        <textarea [(ngModel)]="staffResponse" id="reply-text" rows="7" placeholder="Add Reply"></textarea>
+      </div>
+      <p *ngFor="let file of fileNames; let i = index">
+        {{file}}  <i class="fa fa-times-circle" (click)="removeFile(file,i+1)" aria-hidden="true"></i>
+      </p>
+      <p *ngIf="invalidFile">
+        File upload must be PNG or JPEG
+      </p>
+      <p *ngIf="fileOversize">
+        File must be less than 5MB
+      </p>
+      <div class="row">
+        <form id="frmUploader" enctype="multipart/form-data">
+          <label class="btn btn-success" id="uploadButton"><i class="fa fa-paperclip"></i> Upload <input class ="hidden" (change)="fileAdd()" type="file" #fileUpload name="file"></label><br>
+          <button class="btn btn-success" (click)="sendReply()">Reply</button>
+        </form>
+      </div>
+      <div class="row">
+        <button class="btn btn-danger" (click)="closeTicket()">Close Ticket</button>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="row">
+        <h2>Ticket #{{selectTicket.ticketNum}}: {{selectTicket.subject}}</h2>
+        <div [ngClass]="{'staffMes': mes.isStaff }" class="text-area" *ngFor="let mes of selectTicket.messages; let i = index">
+          <div>
+            <p *ngIf="mes.isStaff" style="color:#01E5A8;" > {{i +1 }}. Staff reply by {{mes.userName}} on {{mes.date}}</p>
+            <p *ngIf="!mes.isStaff" >{{i +1 }}. Sent by {{mes.userName}} on {{mes.date}}</p>
+            <p [innerHtml] = "mes.message"></p>
+            <p *ngFor="let name of mes.fileNames">
+              <a (click)="getImage(i+1,name)"> {{name}}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

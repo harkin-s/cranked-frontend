@@ -1,0 +1,141 @@
+.page-body{
+    margin-top: 40px;
+}
+
+.price-option{
+    text-align: center;
+    margin: 20, 20 ,20 , 20;
+}
+
+.payment-option{
+    text-align: center;
+}
+
+
+.modal-text{
+    margin-left:15px;
+    margin-right:15px;
+    text-align: left !important;
+}
+.thumbnail{
+    background-color: #292929;
+}
+
+.big-icon {
+    font-size: 100px;
+    margin: 30, 10 ,10 ,30 !important;
+    padding: 30, 10 ,30 ,10 !important;
+}
+
+.biggest-icon{
+    font-size: 130px;
+}
+
+.payment-option > .thumbnail{
+    height: 230px;
+}
+
+.checkout-button{
+    text-align: center;
+}
+
+.selectedMethod{
+    background-color: #212121;
+}
+
+.payment-option > .thumbnail {
+    cursor: pointer; cursor: hand;
+}
+.modal-header{
+    border-bottom: none;
+}
+
+.modal-header i{
+    color: #b5b5b5
+}
+
+/* Stripe */
+/**
+ * The CSS shown here will not be introduced in the Quickstart guide, but shows
+ * how you can use CSS to style your Element's container.
+ */
+ .StripeElement {
+    background-color: white;
+    height: 40px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+  }
+  
+  .StripeElement--focus {
+    box-shadow: 0 1px 3px 0 #cfd7df;
+  }
+  
+  .StripeElement--invalid {
+    border-color: #fa755a;
+  }
+  
+  .StripeElement--webkit-autofill {
+    background-color: #fefde5 !important;
+  }
+
+  form.checkout {
+    max-width: 500px;
+    margin: 2rem auto;
+    text-align: center;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    padding: 1rem 2rem;
+    background: white;
+  
+    font-family: monospace;
+    color: #525252;
+    font-size: 1.1rem;
+  }
+  
+  form.checkout button {
+    padding: 0.5rem 1rem;
+    color: white;
+    background: coral;
+    border: none;
+    border-radius: 4px;
+    margin-top: 1rem;
+  }
+  
+  form.checkout button:active {
+    background: rgb(165, 76, 43);
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+
+/* modal */
+.modal-body{
+    margin-left:15px;
+    margin-right:15px;
+    text-align: center !important;
+}
+ 
+.modal-body p{
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+
+.modal-body i{
+    margin-top: 50px;
+}
+
+.modal-header{
+    border-bottom: none;
+}
+
+.modal-header i{
+    color: #b5b5b5
+} 
+
+  

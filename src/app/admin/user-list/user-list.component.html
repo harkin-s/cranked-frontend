@@ -1,0 +1,120 @@
+<div class="text-center">
+  <ul class="list-inline adminTabs">
+    <li [routerLink]="['/admin']"><a>Bot Inventory</a></li>
+    <li [routerLink]="['/admin/op-skins']"><a>OPSkins Inventory</a></li>
+    <li [routerLink]="['/admin/remove']"><a>Remove Auction</a></li>
+    <li [routerLink]="['/admin/support']" ><a>Support Tickets</a></li>
+    <li [routerLink]="['/admin/listings']"><a>Listings</a></li>
+    <li [routerLink]="['/admin/user-list']"><a >User List</a></li>
+  </ul>
+</div>
+
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th (click)="sort('_id')">User #
+          <i class="fa" [ngClass]="{'fa-sort': column != '_id', 'fa-sort-asc': (column == '_id' && isDesc), 'fa-sort-desc': (column == '_id' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('username')">User Name
+          <i class="fa" [ngClass]="{'fa-sort': column != 'username', 'fa-sort-asc': (column == 'username' && isDesc), 'fa-sort-desc': (column == 'username' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('userid')">Steam ID
+          <i class="fa" [ngClass]="{'fa-sort': column != 'userid', 'fa-sort-asc': (column == 'userid' && isDesc), 'fa-sort-desc': (column == 'userid' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('tokensPurchased')">Tokens Purchased
+          <i class="fa" [ngClass]="{'fa-sort': column != 'tokensPurchased', 'fa-sort-asc': (column == 'tokensPurchased' && isDesc), 'fa-sort-desc': (column == 'tokensPurchased' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('tokensSpent')">Tokens Spent
+          <i class="fa" [ngClass]="{'fa-sort': column != 'tokensSpent', 'fa-sort-asc': (column == 'tokensSpent' && isDesc), 'fa-sort-desc': (column == 'tokensSpent' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('tokens')">Current balence
+          <i class="fa" [ngClass]="{'fa-sort': column != 'tokens', 'fa-sort-asc': (column == 'tokens' && isDesc), 'fa-sort-desc': (column == 'tokens' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('auctionsWon')">Auctions Won
+          <i class="fa" [ngClass]="{'fa-sort': column != 'auctionsWon', 'fa-sort-asc': (column == 'auctionsWon' && isDesc), 'fa-sort-desc': (column == 'auctionsWon' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('memberSince')">Memeber Since
+          <i class="fa" [ngClass]="{'fa-sort': column != 'memberSince', 'fa-sort-asc': (column == 'memberSince' && isDesc), 'fa-sort-desc': (column == 'memberSince' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let user of records |  orderBy: {property: column, direction: direction}" >
+      <tr (click)="selectUser(user)" >
+        <td>{{user._id}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.userid}}</td>
+        <td>{{user.tokensPurchased}}</td>
+        <td>{{user.tokensSpent}}</td>
+        <td>{{user.tokens}}</td>
+        <td>{{user.auctionsWon.length}}</td>
+        <td>{{user.memberSince}}</td>
+      </tr>
+      <tr class="row" *ngIf="user.optionsActive">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            <button class="btn btn-success" data-toggle="modal" data-target="#sendModal">Send Tokens</button>
+        </td>
+        <td>
+            <button class="btn btn-warning" data-toggle="modal" data-target="#removeModal">Remove Tokens</button>
+        </td>
+        <td>
+            <button *ngIf="!user.isBanned" class="btn btn-danger" (click)="banUser(true)">Ban User</button>
+            <button *ngIf="user.isBanned" class="btn btn-danger" (click)="banUser(false)">Un-Ban User</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div id="sendModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Send Tokens</h4>
+        </div>
+        <div class="modal-body">
+          <input type="number" [(ngModel)]="tokens" required>
+          <ul class="list-inline token-buttons">
+            <li><button class="btn btn-success" (click)="giveTokens()" >Send</button></li>
+            <li><button class="btn btn-danger" data-dismiss="modal" >Cancel</button></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="removeModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Remove Tokens</h4>
+          </div>
+          <div class="modal-body">
+            <input type="number" [(ngModel)]="tokens" required>
+            <ul class="list-inline token-buttons">
+              <li><button class="btn btn-success" (click)="takeTokens()" >Send</button></li>
+              <li><button class="btn btn-danger" data-dismiss="modal" >Cancel</button></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>

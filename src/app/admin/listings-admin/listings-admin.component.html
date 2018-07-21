@@ -1,0 +1,105 @@
+
+<div class="text-center">
+  <ul class="list-inline adminTabs">
+    <li [routerLink]="['/admin']"><a>Bot Inventory</a></li>
+    <li [routerLink]="['/admin/op-skins']"><a>OPSkins Inventory</a></li>
+    <li [routerLink]="['/admin/remove']"><a>Remove Auction</a></li>
+    <li [routerLink]="['/admin/support']" ><a>Support Tickets</a></li>
+    <li [routerLink]="['/admin/listings']"><a>Listings</a></li>
+    <li [routerLink]="['/admin/user-list']"><a >User List</a></li>
+  </ul>
+</div>
+
+<div class="container">
+  <div *ngIf="listings &&listings.length == 0">
+    <h2>No Listings</h2>
+  </div>
+  <div *ngIf="listings && listings.length > 0">
+    <div *ngFor="let listing of listings">
+      <div *ngIf="listing.status === 'Listed'" class="row col-md-3 listing">
+        <div  class="thumbnail" (click)="selectListing = listing">
+          <h4>{{listing.skinName}}</h4>
+          <img data-toggle="modal" data-target="#listingInfo" src={{listing.imageURL}} alt="">
+          <h4>Listed on {{listing.listDate}} <i data-toggle="modal" data-target="#listingInfo" class="fa fa-info-circle" aria-hidden="true"></i> </h4>
+          <h4>Our cut will be ${{(listing.salePrice * 0.15).toFixed(2)}}</h4>
+          <div class="row" id="listingFooter">
+            <h4>Our Price :<strong>${{listing.salePrice}}</strong></h4>
+            <div class="col-md-12 text-center">
+              <ul class="list-inline">
+                <li>
+                  <button type="button" class="btn btn-warning "><a style="color:#353334" data-toggle="modal" data-target="#listingModify" href="{{listing.inspectLink.link}}">Modify Price</a></button>
+                </li>
+                <li>
+                  <button type="button" class="btn btn-danger " (click)="cancelListing(listing)">Cancel Listing</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="listing.status === 'Sold'" class="row col-md-3 listing" >
+        <div  class="thumbnail" (click)="selectListing = listing">
+          <h4>{{listing.skinName}}</h4>
+          <img data-toggle="modal" data-target="#listingInfoSold" src={{listing.imageURL}} alt="">
+          <h4>Listed on {{listing.saleDate}} <i data-toggle="modal" data-target="#listingInfoSold" class="fa fa-info-circle" aria-hidden="true"></i> </h4>
+          <h4>Our cut was: ${{(listing.salePrice * 0.15).toFixed(2)}}</h4>
+          <div class="row" id="listingFooter">
+            <div class="col-md-12 text-center">
+              <ul class="list-inline">
+                <li>
+                  <button type="button" class="btn btn-danger " (click)="removeFromAdm(listing)">Clear Record</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="listingModify" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content modify">
+      <div class="modal-body" *ngIf="selectListing">
+        <h3>Modify Price</h3>
+        <p>Curretn Price: ${{selectListing.salePrice}}</p>
+        <input [(ngModel)]="newPrice" type="text" class="form-control" (ngModelChange)="ourCut = newPrice * 0.15" placeholder="New Price">
+        <p>Our cut is currentley ${{(selectListing.salePrice * 0.15).toFixed(2)}} <br> Our new cut will be $ {{(ourCut).toFixed(2)}}
+        </p>
+      </div>
+      <div id="modalFooter">
+        <ul class="list-inline">
+          <li><button class="btn btn-success" (click)="modifyListing()">Modify</button></li>
+          <li><button class="btn btn-danger" data-dismiss="modal">Cancel</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="listingInfo" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body text-center" *ngIf="selectListing">
+        <p>Item: {{selectListing.skinName}} <br> Value: ${{selectListing.skinValue}} <br> Auction Reserve: {{selectListing.auctionReserve}}
+          <br> {{selectListing.userBidsOnAuc}} bid on the auction <br> Listing Created on {{selectListing.listDate}} <br>          Sale Price {{selectListing.salePrice}} <br> User Cut {{selectListing.userCut}} <br>
+          <strong>Our Cut ${{(selectListing.salePrice * 0.15).toFixed(2)}}</strong> <br> Listed By {{selectListing.creatorName}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="listingInfoSold" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body text-center" *ngIf="selectListing">
+        <p>Item: {{selectListing.skinName}} <br> Value: ${{selectListing.skinValue}} <br> Auction Reserve: {{selectListing.auctionReserve}}
+          <br> {{selectListing.userBidsOnAuc}} bid on the auction <br> Listing Created on {{selectListing.listDate}} <br>          Sale Price {{selectListing.salePrice}} <br> User Cut {{selectListing.userCut}} <br>
+          <strong>Our Cut ${{(selectListing.salePrice * 0.15).toFixed(2)}}</strong> <br> Sold By {{selectListing.creatorName}} <br> Bought by {{selectListing.purchaserName}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

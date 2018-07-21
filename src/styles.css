@@ -1,0 +1,87 @@
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+/* Bootstrap Overrites */
+body{
+    background-color:#232323;
+    color:#b5b5b5;
+}
+.thumbnail{
+    border: none;
+    background-color:#232323;
+
+}
+a{
+    color: #b5b5b5;
+}
+a:hover{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.pagination>li>a, .pagination>li>span {
+    background-color: #ffffff;
+    color: #000000;
+}
+.btn-success{
+    background-color:#00E6A8;
+    color: #000000;
+
+}
+.btn-danger{
+    background-color: #FF4982;
+    color: #000000;
+}
+.btn-warning{
+    background-color:#E6B500;
+    color: #000000;
+}
+.table{
+    background-color: #353334;
+}
+.table thead{
+    background-color: #292929;
+}
+.table th {
+    border-bottom: 1px solid #000000;
+}
+.table td {
+    border-bottom: 1px solid #000000;
+}
+.table tr:hover {
+    background-color: #292929;
+    cursor: pointer;
+}
+
+.table>thead>tr>th{
+    border: none;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    border-color: #000000;
+}
+.modal-content{
+    background-color: #292929;
+}
+.modal-footer{
+    border: none;
+}
+.form-control{
+    background-color: #353334;
+    color: #b5b5b5;
+    border-color: #000000
+}
+
+.mydp .selection{
+    background-color: #353334;
+    color: #b5b5b5;
+}
+input{
+    background: #353334;
+    color: #b5b5b5;
+    border: 1px solid #000000;
+}
+a:hover{
+    cursor: pointer;
+}
+.modal-header{
+    border-bottom:none;
+}

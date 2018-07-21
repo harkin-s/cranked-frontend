@@ -1,0 +1,15 @@
+#button-row{
+    height: 45px;
+}
+#button-row button{
+    margin: 5px;
+}
+.table>tbody+tbody{
+    border: none;
+}
+.table>thead>tr>th{
+    border: none;
+}
+.token-buttons{
+    margin-top: 8px;
+}

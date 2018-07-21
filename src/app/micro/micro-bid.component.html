@@ -1,0 +1,135 @@
+<div class="container">
+  <div *ngIf="auctions.length == 0 ">
+    <h2>No active Auctions</h2>
+  </div>
+  <div *ngIf="auctions.length > 0 ">
+    <div *ngIf="!user.highRoller">
+      <div *ngFor="let auction of auctions">
+        <div class="row col-md-3 micro-bid" *ngIf="auction.value < 30" [@fadeIn]="''">
+          <div *ngIf="auction.auctionLive">
+            <div *ngIf="!auction.finished">
+              <div class="thumbnail">
+                <h4>{{auction.name}}</h4>
+                <h5 style="text-align: center;">Value: ${{auction.value}}</h5>
+                <img src={{auction.imageURL}} alt="">
+                <h5> <strong>Max Price: {{auction.maxPrice}}</strong> </h5>
+                <h5>Current Price:{{auction.currentPrice | currency:'USD':true:'1.2-2'}}</h5>
+                <p *ngIf="auction.bids.length > 0">Most Recent Bid: {{auction.bids[auction.bids.length - 1].username}}</p>
+                <p *ngIf="auction.bids.length == 0"></p>
+                <p>Bids</p>
+                <h4 [ngClass]="{'red': auction.timeRemaining <= 10 }" >{{this.Moment.utc(auction.timeRemaining * 1000).format('HH:mm:ss')}} Remaining...</h4>
+                <div *ngIf="auction.auctionLive">
+                  <ul class="list-inline bid-buttons ">
+                    <li>
+                      <button type="button" class="btn btn-success " (click)="bid(auction)">BID ({{auction.bidCost}} Tokens)</button>
+                    </li>
+                    <li>
+                      <button type="button" class="btn btn-success" >AUTO-BID <i data-toggle="modal" data-target="#autoBidModal" class="fa fa-info-circle" aria-hidden="true"></i></button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="auction.finished">
+              <div class="thumbnail">
+                <h4>{{auction.name}}</h4>
+                <h5 style="text-align: center;">Value: ${{auction.value}}</h5>
+                <img src={{auction.imageURL}} alt="">
+                <h5>Final Price: {{auction.currentPrice | currency:'USD':true:'1.2-2'}}</h5>
+                 <p *ngIf="auction.bids.length > 0">Winner: {{auction.bids[auction.bids.length - 1].username}}</p>
+                <ul class="list-inline bid-buttons ">
+                  <li>
+                    <button type="button" class="btn disabled " (click)="bid(auction)">BID ({{auction.bidCost}} Tokens)</button>
+                  </li>
+                  <li>
+                    <button type="button" class="btn disabled" >AUTO-BID <i data-toggle="modal" data-target="#autoBidModal" class="fa fa-info-circle" aria-hidden="true"></i></button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!auction.auctionLive">
+            <div class="thumbnail">
+              <h4>{{auction.name}}</h4>
+              <h5 style="text-align: center;">Value: ${{auction.value}}</h5>
+              <img src={{auction.imageURL}} alt="">
+              <h4 *ngIf="auction.startCountdown > 0">Auction Begins in {{this.Moment.utc(auction.startCountdown * 1000).format('HH:mm:ss')}}</h4>
+              <h4 *ngIf="auction.startCountdown < 0"> {{auction.biddersReady.length}} / {{auction.biddersStartAmt}}</h4>
+              <ul class="list-inline text-center">
+                <li>
+                  <button class="btn btn-success" (click)="wantThis(auction)">I WANT THIS</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="user.highRoller">
+      <div *ngFor="let auction of auctions">
+        <div class="row col-md-3 micro-bid" *ngIf="auction.value > 30" [@fadeIn]="''">
+          <div [hidden]="!auction.auctionLive">
+            <div [hidden]="auction.winnerID">
+              <div class="thumbnail">
+                <h4>{{auction.name}}</h4>
+                <h5 style="text-align: center;">Value: ${{auction.value}}</h5>
+                <img src={{auction.imageURL}} alt="">
+                <h5>Current Price:{{auction.currentPrice | currency:'USD':true:'1.2-2'}}</h5>
+                <p *ngIf="auction.bids.length > 0">Most Recent Bid: {{auction.bids[auction.bids.length - 1].username}}</p>
+                <p *ngIf="auction.bids.length == 0"></p>
+                <p>Bids</p>
+                <h4 [ngClass]="{'red': auction.timeRemaining <= 10 }" >{{this.Moment.utc(auction.timeRemaining * 1000).format('HH:mm:ss')}} Remaining...</h4>
+                <div *ngIf="auction.auctionLive">
+                  <ul class="bid-buttons list-inline text-center">
+                    <li>
+                      <button type="button" class="btn btn-success " (click)="bid(auction)">BID ({{auction.bidCost}} Tokens)</button>
+                    </li>
+                    <li>
+                      <button type="button" class="btn btn-success ">AUTO-BID</button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div [hidden]="!auction.winnerID" class="alert alert-info alert-dismissable">
+              <a (click)="removeAlert(auction)" class="close" aria-label="close">×</a>
+              <strong>Auction Won by</strong> {{auction.userID}}
+            </div>
+          </div>
+          <div *ngIf="!auction.auctionLive">
+            <div class="thumbnail">
+              <h4>{{auction.name}}</h4>
+              <h5 style="text-align: center;">Value: ${{auction.value}}</h5>
+              <img src={{auction.imageURL}} alt="">
+              <h4 *ngIf="auction.startCountdown > 0">Auction Begins in {{this.Moment.utc(auction.startCountdown * 1000).format('HH:mm:ss')}}</h4>
+              <h4 *ngIf="auction.startCountdown < 0"> {{auction.biddersReady.length}} / {{auction.biddersStartAmt}}</h4>
+
+              <ul class="list-inline text-center">
+                <li>
+                  <button class="btn btn-success" (click)="wantThis(auction)">I WANT THIS</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="autoBidModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4>Auto Bid</h4>
+        <p>The auto-bid feature will allow you to bid on auctions without having to monitor them constantly</p>
+        <p>Max token limit </p> <input placeholder="Max Tokens" [(ngModel)]="tokenLimit">
+        <p>(Leave blank to set no upper limit)</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" >Start</button>
+        <button class="btn btn-danger" data-dismiss='modal'>Stop</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th (click)="sort('rank')">Rank
+          <i class="fa" [ngClass]="{'fa-sort': column != 'rank', 'fa-sort-asc': (column == 'rank' && isDesc), 'fa-sort-desc': (column == 'rank' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('username')">Member Name
+          <i class="fa" [ngClass]="{'fa-sort': column != 'username', 'fa-sort-asc': (column == 'username' && isDesc), 'fa-sort-desc': (column == 'username' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('auctionsWon')">Auctions Won
+          <i class="fa" [ngClass]="{'fa-sort': column != 'auctionsWon', 'fa-sort-asc': (column == 'auctionsWon' && isDesc), 'fa-sort-desc': (column == 'auctionsWon' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+          <th (click)="sort('amountSaved')">Amount Saved
+          <i class="fa" [ngClass]="{'fa-sort': column != 'amountSaved', 'fa-sort-asc': (column == 'amountSaved' && isDesc), 'fa-sort-desc': (column == 'amountSaved' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('tokensAcquired')">Tokens Acquired
+          <i class="fa" [ngClass]="{'fa-sort': column != 'tokensAcquired', 'fa-sort-asc': (column == 'tokensAcquired' && isDesc), 'fa-sort-desc': (column == 'tokensAcquired' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+        <th (click)="sort('memberSince')">Memeber Since
+          <i class="fa" [ngClass]="{'fa-sort': column != 'memberSince', 'fa-sort-asc': (column == 'memberSince' && isDesc), 'fa-sort-desc': (column == 'memberSince' && !isDesc) }"
+            aria-hidden="true"> </i>
+        </th>
+      </tr>
+    </thead>
+    <tbody >
+      <tr  *ngFor="let user of records |  orderBy: {property: column, direction: direction}">
+        <td class="rank">
+          <img *ngIf="user.rank === 1" src="../../assets/images/first.png" alt="">
+          <img *ngIf="user.rank === 2" src="../../assets/images/second.png" alt="">
+          <img *ngIf="user.rank === 3" src="../../assets/images/third.png" alt=""> 
+          <p *ngIf="user.rank > 3">{{user.rank}}</p>
+        </td>
+        <td>{{user.username}}</td>
+        <td>{{user.auctionsWon.length}}</td>
+        <td>{{user.tokensAcquired}}</td>
+        <td>{{user.tokensAcquired}}</td>
+        <td>{{user.memberSince}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

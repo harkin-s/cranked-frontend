@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <p>
+      <strong>Affiliate</strong>
+    </p>
+    <br>
+    <p>After signing in with your Steam account, you can create your own affiliate code. Another user can enter this code after
+      signing in. This gains both of you 30 free tokens! </p>
+    <br>
+    <p>
+      ** You must have played at least 8 hours of CS:GO in order to claim your free Tokens **
+    </p>
+    <br>
+    <p>
+      ** Share your link in a non-spammy manner! **
+    </p>
+    <br>
+    <p>
+      ** Promo code cannot be changed once set **
+    </p>
+    <br>
+    <p>
+      Referring yourself on a secondary account is against site rules. Please read the full Terms and Conditions before creating
+      a code. Code must be used within 24 hours of a user first signing in. Code can consist of letters, numbers, underscores,
+      and hyphens, and can be up to 25 characters long. Code is case sensitive.
+    </p>
+    <hr>
+  </div>
+  <div class="row">
+    <p>
+      <strong>
+        Use Code
+      </strong>
+    </p>
+    Use Affiliate code:
+    <input [(ngModel)]="useAffCode" type="text">
+    <button class="btn btn-success" (click)="useCode()">Use</button>
+    <div class="message" *ngIf="useCodeMessage" >{{useCodeMessage}}</div>
+    <hr>
+  </div>
+  <div class="row">
+    <p>
+      <strong>
+        Create Code
+      </strong>
+    </p>
+    Desired Affiliate Code:
+    <input [(ngModel)]="createAffCode" type="text">
+    <button class="btn btn-success" (click)="createCode()">Save</button>
+    <div class="message" *ngIf="createCodeMessage" >{{createCodeMessage}}</div>
+  </div>
+</div>

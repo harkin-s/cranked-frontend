@@ -1,0 +1,44 @@
+<div class="container">
+  <div *ngIf="listings && listings.length == 0">
+    <h2>No Listings</h2>
+  </div>
+  <div *ngIf="listings && listings.length > 0">
+    <div class="row">
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-4 listingSearch text-center">
+      <div class="input-group">
+        <input [(ngModel)]= "search" type="text" class="form-control" placeholder="Search" (keydown.enter)="filter()">
+      </div>
+      </div>
+    <div class="col-md-4">
+      
+    </div>
+    </div>
+    <div class="row col-md-3 listing" *ngFor="let listing of listings">
+
+      <div class="thumbnail">
+        <h4>{{listing.skinName}}</h4>
+        <img src={{listing.imageURL}} alt="">
+        <h5>Value: ${{listing.skinValue}}</h5>
+        <h5>OPSKin Lowest {{listing.skinValue}}</h5>
+        <div class="row" id="listingFooter">
+          <h4>Our Price :<strong>${{listing.salePrice}}</strong></h4>
+          <div class="col-md-12 text-center">
+            <ul class="list-inline">
+              <li>
+                <button type="button" class="btn btn-info "><a style="color:#353334"  href="{{listing.inspectLink.link}}">INSPECT</a></button>
+              </li>
+              <li>
+                <button type="button" class="btn btn-success " data-toggle="modal" data-target="#paymentPopupModal" (click)="this.selectListing = listing">BUY NOW</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-payment-popup *ngIf="selectListing"></app-payment-popup>
+
+    <!-- <app-payment-popup *ngIf="selectListing" paymentValueOption={{selectListing.skinValue}}></app-payment-popup> -->
+  </div>
+</div>

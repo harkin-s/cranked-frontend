@@ -1,0 +1,222 @@
+<div *ngIf="user && !viewTicket" class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <h4>Account Summary</h4>
+      <p>Joined: {{user.joinDate}}</p>
+      <p>Free Tokens: </p>
+      <p>Auctions Won: {{user.auctionsWon.length}}</p>
+      <p>Rank: {{user.rank}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Your Support Tickets</h4>
+      <table *ngIf="records !=null" class="table">
+        <thead>
+          <tr>
+            <th (click)="sort('ticketNum')">Ticket
+              <i class="fa" [ngClass]="{'fa-sort': column != 'ticketNum', 'fa-sort-asc': (column == 'ticketNum' && isDesc), 'fa-sort-desc': (column == 'ticketNum' && !isDesc) }"
+                aria-hidden="true"> </i>
+            </th>
+            <th (click)="sort('department')">Department
+              <i class="fa" [ngClass]="{'fa-sort': column != 'department', 'fa-sort-asc': (column == 'department' && isDesc), 'fa-sort-desc': (column == 'department' && !isDesc) }"
+                aria-hidden="true"> </i>
+            </th>
+            <th (click)="sort('dateCreated')">Date Created
+              <i class="fa" [ngClass]="{'fa-sort': column != 'dateCreated', 'fa-sort-asc': (column == 'dateCreated' && isDesc), 'fa-sort-desc': (column == 'dateCreated' && !isDesc) }"
+                aria-hidden="true"> </i>
+            </th>
+            <th (click)="sort('lastUpdatedDiff')">Updated
+              <i class="fa" [ngClass]="{'fa-sort': column != 'lastUpdatedDiff', 'fa-sort-asc': (column == 'lastUpdatedDiff' && isDesc), 'fa-sort-desc': (column == 'lastUpdatedDiff' && !isDesc) }"
+                aria-hidden="true"> </i>
+            </th>
+            <th (click)="sort('status')">Status
+              <i class="fa" [ngClass]="{'fa-sort': column != 'status', 'fa-sort-asc': (column == 'status' && isDesc), 'fa-sort-desc': (column == 'status' && !isDesc) }"
+                aria-hidden="true"> </i>
+            </th>
+            <th (click)="sort('subject')">Subject
+              <i class="fa" [ngClass]="{'fa-sort': column != 'subject', 'fa-sort-asc': (column == 'subject' && isDesc), 'fa-sort-desc': (column == 'subject' && !isDesc) }"
+                aria-hidden="true"> </i>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ticket of records |  orderBy : {property: column, direction: direction}" (click)="selectTicket(ticket)">
+            <td>{{ticket.ticketNum}}</td>
+            <td>{{ticket.department}}</td>
+            <td>{{ticket.dateCreated}}</td>
+            <td>
+              <span [hidden]="ticket.lastUpdatedDiff > 1440">
+                {{this.Math.ceil(ticket.lastUpdatedDiff / 60 )}} hours ago
+              </span>
+              <span [hidden]="ticket.lastUpdatedDiff < 1440">
+                {{this.Math.ceil(ticket.lastUpdatedDiff / 1440 )}} days ago
+              </span>
+            </td>
+            <td>{{ticket.status}}</td>
+            <td>{{ticket.subject}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+
+      <h4>Account Information</h4>
+      <form class="accInfo">
+        <input type="text" placeholder="Trade Url">
+        <i class="fa" [ngClass]="{'fa-check': user.tradeUrl !=null , 'fa-times': !user.tradeUrl}"></i>
+        <input type="text" placeholder="Email">
+        <i class="fa" [ngClass]="{'fa-check': user.email !=null , 'fa-times': !user.emaill}"></i>
+      </form>
+
+    </div>
+    <div class="col-md-8">
+      <h4>Transaction History</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+              Transaction ID
+            </th>
+            <th>
+              Transaction Method
+            </th>
+            <th>
+              Transaction Value
+            </th>
+            <th>
+              Recived
+            </th>
+            <th>
+              Date of Transaction
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let transaction of transactions">
+          <tr (click)="selectTransaction(transaction)">
+            <td>{{transaction.tranId}}</td>
+            <td>{{transaction.method}}</td>
+            <td>${{transaction.value}}</td>
+            <td>{{transaction.tokens}}</td>
+            <td>{{transaction.date}}</td>
+          </tr>
+          <tr *ngIf="transaction.selected">
+            <h5>Skins Deposited:</h5>
+            <div *ngFor="let name of transaction.skinNames; let i =index">
+              <p>{{name}} - {{transaction.skinValues[i]}}</p>
+            </div>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 sendTokens">
+      <h4>Send Tokens</h4>
+      <input required [(ngModel)]="receiverAmt" type="number" placeholder="How Many Tokens?">
+      <input [(ngModel)]="receiverID" placeholder="User's Steam64 ID" required>
+      <div class="col-md-12" *ngIf="errorMessage != null">
+        <div class="alert alert-success fade in" *ngIf="!sendError">{{errorMessage}}</div>
+        <div class="alert alert-danger fade in" *ngIf="sendError">{{errorMessage}}</div>
+      </div>
+      <button class="btn btn-success" (click)="sendTokens()">Send Tokens</button>
+    </div>
+    <!-- Cancel Active Subscription -->
+    <div *ngIf="user.subscriptionStatus==='active'" class="col-md-8 subscriptionStatus">
+      <p>
+        You are currently receiving 400 tokens per week ($6.99 per month)
+      </p>
+      <button class="btn btn-danger" (click)="cancelSubscription()">Cancel Subscription</button>
+    </div>
+    <!-- Subscription cancelled -->
+    <div *ngIf="user.subscriptionStatus==='cancelled'" class="col-md-8 subscriptionStatus">
+      <p>
+        You have cancelled you subscription. To start it again visit the 'Get Tokens' page
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="">Enable one-click checkout in skin store. This is useful for users who want to beat competition with instantaneous
+          purchasing.
+        </label>
+        <p style="color:#FF4982;">**Note: Checking this option means you will not receive an "Are you sure?" message before the skin is purchased and
+          traded to you**</p>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="">Show me on the leaderboard. (Uncheck if you don't want people to see how many tokens you've acquired)</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Auction Wins</h4>
+      <div *ngIf='user.auctionsWon.length > 0' style="padding-left:0" class="col-md-8">
+        <table class="table">
+          <thead>
+            <th>Auction ID</th>
+            <th>Skin Won</th>
+            <th>Skin Vlaue</th>
+            <th>Win Date</th>
+            <th>Status</th>
+          </thead>
+          <tbody *ngFor="let auc of user.auctionsWon">
+            <td>{{auc._id}}</td>
+            <td>{{auc.name}}</td>
+            <td>{{auc.value}}</td>
+            <td>{{auc.winDate}}</td>
+            <td>{{auc.status}}</td>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf='user.auctionsWon.length <= 0'>
+        <h4>No Auctions Won!</h4>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Sale History</h4>
+      <div *ngIf='user.saleHistory.length > 0' style="padding-left:0" class="col-md-12">
+        <table class="table">
+          <thead>
+            <th>Transaction ID</th>
+            <th>Skin Listed</th>
+            <th>Sale Price </th>
+            <th>List Date</th>
+            <th>Sale Date</th>
+            <th>User cut</th>
+            <th>PayPal</th>
+            <th>Status</th>
+            <th>Days Until you Can Unlist and Claim</th>
+            <th>Unlist and Claim</th>
+          </thead>
+          <tbody *ngFor='let sale of user.saleHistory'>
+            <td>{{sale._id}}</td>
+            <td>{{sale.skinName}}</td>
+            <td>{{sale.salePrice}}</td>
+            <td>{{sale.listDate}}</td>
+            <td>{{sale.saleDate}}</td>
+            <td>{{sale.userShare}}</td>
+            <td>{{sale.creatorPayPalEmail}}</td>
+            <td>{{sale.status}}</td>
+            <td>{{sale.claimDays}}</td>
+            <td>
+              <button class="btn btn-danger" (click)="unlistAndClaim(sale._id)">Unlist and Claim</button>
+            </td>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf='user.saleHistory.length <= 0'>
+        <h4>No Items sold!</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-ticket-view *ngIf="viewTicket" (viewChange)="goBack()" [selectTicket]="ticket"></app-ticket-view>

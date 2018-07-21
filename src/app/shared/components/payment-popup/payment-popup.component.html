@@ -1,0 +1,70 @@
+<div id="paymentPopupModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- payment methods -->
+        <div *ngIf="state==='initState'">
+          <div class="row">
+            <div class=" col-md-6 payment-option">
+              <div (click)="paymentMethod='paypal'" [ngClass]="{'selectedMethod': paymentMethod==='paypal' }" class="thumbnail">
+                <i class="fa fa-paypal big-icon" aria-hidden="true"></i>
+                <div class="modal-text">
+                  <p>Pay with PayPal. Secure,easy, and fast.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 payment-option">
+              <div (click)="paymentMethod='stripe'" [ngClass]="{'selectedMethod': paymentMethod==='stripe' }" class="thumbnail">
+                <i class="fa fa-cc-stripe big-icon" aria-hidden="true"></i>
+                <div class="modal-text">
+                  <p>Pay with Stripe.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row checkout-button">
+            <button (click)="onCheckoutButton()" type="button" class="btn btn-success" id="checkout">Checkout</button>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" [(ngModel)]="saveStripeDetails">Save payment details yo.
+            </label>
+          </div>
+        </div>
+        <!-- stripe form -->
+        <form [hidden]="state!=='stripeState'" #checkout="ngForm" (ngSubmit)="createStripeToken(checkout)" class="checkout">
+          <div class="form-row">
+            <label for="card-info">Credit or debit card</label>
+            <div id="card-info" #cardInfo></div>
+
+            <div id="card-errors" role="alert" *ngIf="error">{{ error }}</div>
+          </div>
+
+          <button type="submit">Pay $777</button>
+        </form>
+        <!-- success/error/waiting messages  -->
+        <div *ngIf="state==='waiting'">
+          <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw text-center"></i>
+          <p>Processig Payment...</p>
+        </div>
+        <div *ngIf="state==='success'">
+          <i class="fa fa-check-circle fa-3x text-center" aria-hidden="true"></i>
+          <p>Tokens have been successfully added to your account!</p>
+        </div>
+        <div *ngIf="state==='failed'">
+          <i class="fa fa-frown-o fa-3x fa-spin" aria-hidden="true"></i>
+          <p>The payment has failed.</p>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+.skin{
+    margin: 0px;
+    cursor: pointer; cursor: hand; 
+}
+.skin p{
+    font-size: small;
+    text-align: center;
+}
+.selectTab{
+   font-weight: 800;
+}
+.adminTabs{
+    margin-bottom: 15px;
+    margin-top: 15px; 
+    border: none;
+}
+.adminTabs li a{
+    color: #777;
+    
+}
+.adminTabs li a:hover{
+    color: #ffffff;
+    background-color:transparent;
+    border: none;
+    text-decoration: none;
+}
+
+
+li{
+    cursor: pointer; cursor: hand;
+}
+
+.ng-valid[required], .ng-valid.required  {
+  border-left: 2px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 2px solid #a94442; /* red */
+}
+
+.timeForm{
+    margin-bottom: 1.5%;
+}
+.opSearch{
+    margin-bottom: 1%;
+}
+.pageNav p{
+    text-align: left;
+    margin-left: 60px
+}
+.pageNav ul{
+    margin-bottom: auto;
+}
+div.opSkin div{
+    cursor: pointer; cursor: hand;
+    text-align: center;
+}
+.search{
+    margin-left: 35%;
+    margin-bottom: 3%;
+}
+.mydp .selection{
+    background-color: #353334;
+    color: #777;
+}
+.modal-header{
+    border-bottom:1px solid #777; 
+}

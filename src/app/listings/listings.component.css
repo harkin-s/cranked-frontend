@@ -1,0 +1,30 @@
+.listing{
+    margin-right: 4%;
+    margin-left: 4%;
+}
+h4{
+    text-align: center;
+}
+h2{
+    text-align: center;
+}
+#listingFooter{
+    margin-top:10%;
+}
+button{
+    width:100px;
+}
+#listingFooter .list-inline>li{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.listingSearch .input-group{
+    margin-left: auto;
+    margin-right: auto;
+}
+.input-group-addon{
+    background-color: #353334;
+    color: #777;
+}
+

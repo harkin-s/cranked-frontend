@@ -1,0 +1,43 @@
+.wins{
+  margin-right: 2%;
+  margin-left: 2%;
+}
+.wins p {
+  font-size: small;
+}
+h3{
+  text-align: left;
+}
+h2{
+  text-align: center;
+}
+h5{
+  text-align: left;
+}
+h4{
+  text-align: center;
+}
+.red{
+  color: red;
+}
+.list-inline>li{
+  padding-left: 0;
+  padding-right: 0;
+}
+.win-buttons{
+  margin-left: 4%;
+  margin-right: 4%;
+
+}
+
+.win-buttons button{
+  width: 150px;
+
+}
+
+#claimModal .modal-content{
+  background-image: url("../../assets/images/Auction_Win_Graphic.png");
+  background-position:center center;
+  background-size:cover;
+}
+

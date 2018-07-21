@@ -1,0 +1,146 @@
+<!-- <app-payment-popup paymentValueOption={{paymentValueOption}} state=true></app-payment-popup> -->
+<app-payment-popup></app-payment-popup>
+<app-payment-success-popup></app-payment-success-popup>
+
+<div class="page-body">
+  <button id="paymentSuccessButton" [hidden]="true" data-toggle="modal" data-target="#paymentSuccessModal">paypment success</button>
+  <!--Price Options for buying tokens-->
+  <div class="container-fluid ">
+    <div class="row">
+      <!-- Price Option 1-->
+      <div class=" col-md-2 col-md-offset-1 price1">
+        <div class="thumbnail text-center">
+          <img src="../../assets/images/17.gif" class="img-fluid price-img" />
+          <div class="thumbnail-text">
+            <h1>230</h1>
+            <p>ADD TOKENS</p>
+            <button  (click)="openPaymentsPopup('single', '10')" type="button" class="btn" data-toggle="modal" data-target="#paymentPopupModal">$10</button>
+          </div>
+        </div>
+      </div>
+      <!-- Price Option 2-->
+      <div class=" col-md-2  price2 price-option">
+        <div class="thumbnail text-center">
+          <img src="../../assets/images/TSide Transparent.png" class="img-fluid price-img" />
+          <div class="thumbnail-text">
+            <h1>340</h1>
+            <p>ADD TOKENS</p>
+            <button (click)="openPaymentsPopup('single', '15')" type="button" class="btn" data-toggle="modal" data-target="#paymentPopupModal">$15</button>
+          </div>
+        </div>
+      </div>
+      <!-- Price Option 3-->
+      <div class="col-md-2 price-option price1">
+        <div class="thumbnail text-center">
+          <img src="../../assets/images/17.gif" class="img-fluid price-img" />
+          <div class="thumbnail-text">
+            <h1>560</h1>
+            <p>ADD TOKENS</p>
+            <button (click)="openPaymentsPopup('single', '25')" type="button" class="btn" data-toggle="modal" data-target="#paymentPopupModal">$25</button>
+          </div>
+        </div>
+      </div>
+      <!-- Price Option 4-->
+      <div class="col-md-2 price-option price2">
+        <div class="thumbnail">
+          <img src="../../assets/images/TSide Transparent.png" class="img-fluid price-img" />
+          <div class="thumbnail-text">
+            <h1>1120</h1>
+            <p>ADD TOKENS</p>
+            <button (click)="openPaymentsPopup('single', '50')" type="button" class="btn" data-toggle="modal" data-target="#paymentPopupModal">$50</button>
+          </div>
+        </div>
+      </div>
+      <!-- Price Option 5-->
+      <div class="col-md-2 price-option price1">
+        <div class="thumbnail">
+          <img src="../../assets/images/17.gif" class="img-fluid price-img" />
+          <div class="thumbnail-text">
+            <h1>2300</h1>
+            <p>ADD TOKENS</p>
+            <button (click)="openPaymentsPopup('single', '100')" type="button" class="btn" data-toggle="modal" data-target="#paymentPopupModal">$100</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-offset-1 col-md-10 price-option">
+        <!-- Subscription Option-->
+        <div class="thumbnail">
+          <h3>For $5.99 per month you can get 300 tokens per day!</h3>
+          <button (click)="openPaymentsPopup('subscription', null)" type="button" class="btn btn-success" data-toggle="modal" data-target="#paymentPopupModal">Easy DragonLores now!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+
+  <!--deposit skins-->
+  <div class="container">
+    <div class="row">
+      <p class="text-center">Your Inventory</p>
+      <p class="text-center">Tokens for selected items: {{totalTokens}}</p>
+      <div class="text-center">
+        <a (click)="depositSkin()" type="button" class="btn btn-success" data-toggle="modal" data-target="#depositSkinModal">Deposit a skin!</a>
+      </div>
+    </div>
+    <div class="row skinList">
+      <div class="row col-md-3 skin" *ngFor="let inv of pageInventory">
+        <div class="thumbnail" (click)="selectSkin($event, inv)" [ngClass]="{'selectSkin': inv.selectedSkin }">
+          <img src={{inv.icon_url_large}} alt="">
+          <p>{{inv.name}}</p>
+          <p>${{inv.price}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="pageNav col-md-12">
+        <ul class="pagination">
+          <li (click)="changePage(-1,0,12)">
+            <a>
+              <i class="fa fa-chevron-left"></i> Previous</a>
+          </li>
+          <li (click)="changePage(1,0,12)">
+            <a>Next
+              <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </a>
+          </li>
+        </ul>
+        <p>{{currentPage}} of {{numberOfPages}}</p>
+      </div>
+    </div>
+  </div>
+  <!-- end of deposit skins -->
+
+
+  <!-- Deposit Skins Modal -->
+  <div class="modal fade" id="depositSkinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="depositState==='waiting'">
+            <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw text-center"></i>
+            <p>Sending you a trade offer...</p>
+          </div>
+          <div *ngIf="depositState==='success'">
+            <i class="fa fa-check-circle fa-3x text-center" aria-hidden="true"></i>
+            <p>Success! please check your trade offers</p>
+          </div>
+          <div *ngIf="depositState==='failed'">
+            <i class="fa fa-frown-o fa-3x fa-spin" aria-hidden="true"></i>
+            <p>There was an error sending you a trade offer</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>

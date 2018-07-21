@@ -1,0 +1,42 @@
+
+<div class="text-center">
+  <ul class="list-inline adminTabs">
+    <li [routerLink]="['/admin']"><a>Bot Inventory</a></li>
+    <li [routerLink]="['/admin/op-skins']"><a>OPSkins Inventory</a></li>
+    <li [routerLink]="['/admin/remove']"><a>Remove Auction</a></li>
+    <li [routerLink]="['/admin/support']" ><a>Support Tickets</a></li>
+    <li [routerLink]="['/admin/listings']"><a>Listings</a></li>
+    <li [routerLink]="['/admin/user-list']"><a >User List</a></li>
+  </ul>
+</div>
+
+  <div class="container">
+    <div class="row">
+      <div class="row col-md-4 skin" *ngFor="let auc of activeAuctions">
+        <div class="thumbnail">
+          <img src={{auc.imageURL}} alt="">
+          <p>{{auc.name}}
+          <p>
+            <button type="button" data-toggle="modal" data-target="#removeModal" class="btn btn-danger" (click)="selectAuctionId = auc._id">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="removeModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Are you sure you want to remove this auction?</h4>
+        <div *ngIf="toRemove != undefined">
+          {{toRemove.name}}
+        </div>
+      </div>
+      <div class="modal-body">
+        <button type="button" data-dismiss="modal" class="btn btn-default">No</button>
+        <button type="button" (click)="removeSelectAuction()" data-dismiss="modal" class="btn btn-danger">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+

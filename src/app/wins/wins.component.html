@@ -1,0 +1,78 @@
+<app-payment-popup></app-payment-popup>
+<app-payment-success-popup></app-payment-success-popup>
+<button id="paymentPopupButton" [hidden]="true" data-toggle="modal" data-target="#paymentPopupModal"></button>
+<div class="container">
+  <div class="row">
+    <h3>Your Auction Wins</h3>
+  </div>
+  <div *ngIf="wins.length > 0">
+    <div *ngFor="let win of wins">
+      <div class="row col-md-3 wins">
+        <div class="thumbnail" (click)="selectSkin(win)">
+          <p>{{win.name}} - {{win.wear}}</p>
+          <i class="fa fa-info-circle" style="cursor: pointer" (click)="tooltip.show()"></i>
+          <span matTooltip = {{tooltipMessage}} [matTooltipPosition]="position" #tooltip="matTooltip"></span>
+          <img src={{win.imageURL}} alt="">
+          <p>Max Price: ${{win.maxPrice}}</p>
+          <p>Final Price: ${{win.finalPrice}}</p>
+          <ul class="list-inline text-center win-buttons">
+            <li>
+              <button *ngIf="win.actionTaken === 'unclaimed'" class="btn btn-success" data-toggle="modal" (click)="claim(win)" data-target="#claimModal">CLAIM</button>
+              <button *ngIf="win.actionTaken === 'claimed'" class="btn btn-danger">Ready in {{win.readyIn}}</button>
+              <button *ngIf="win.actionTaken === 'listed'" class="btn btn-warning">Withdraw</button>
+              <button *ngIf="win.actionTaken === 'withdrawn'" class="btn btn-warning">Withdrawn</button>
+              <button *ngIf="win.actionTaken === 'converted'" class="btn btn-block">Token Exchange</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="wins.length === 0">
+    <h4>Nothing to see here yet</h4>
+  </div>
+
+</div>
+
+
+<button id="claimModalButton" [hidden]="true" data-toggle="modal" data-target="#claimModal"></button>
+<div id="claimModal" class="modal fade" role="dialog">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <h4>Please choose an action</h4>
+      </div>
+      <div class="modal-footer">
+        <div class="col-md-12 text-center">
+          <button type="button" class="btn btn-success"  data-dismiss='modal' (click)="keepSkin()" >Keep your skin</button>
+          <button type="button" class="btn btn-success"  data-dismiss='modal' (click)="listSkin()" >List for real profit</button>
+          <button type="button" class="btn btn-success"  data-dismiss='modal' (click)="getSkinValue()">Convert to tokens</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<button id="skinValueModalButton" [hidden]="true" data-toggle="modal" data-target="#skinValueModal"></button>
+<div id="skinValueModal" class="modal fade" role="dialog">
+  <div *ngIf="skinValue" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <p>{{selectedAuction.name}}</p>
+        <p>Convert to tokens to win more skins</p>
+        <p>Value in Tokens <strong>{{skinValue}}</strong> </p>
+      </div>
+      <div class="modal-footer">
+        <div class="col-md-12 text-center">
+          <button type="button" class="btn btn-success"  data-dismiss='modal' (click)="convertSkin()" >Convert</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

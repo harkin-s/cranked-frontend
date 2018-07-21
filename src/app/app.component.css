@@ -1,0 +1,71 @@
+#mainHeader{
+    margin-bottom: 0px;
+    background-color: transparent;
+    background: transparent;
+    padding: 0 0 0 0;
+    background-image: url("../assets/images/re_background.png");
+        background-position-x:center;
+    background-position-y: center; 
+    width: 100%;
+    height: auto
+}
+#mainHeader .row{
+    margin:none;
+}
+#balence{
+    margin-left: 57%;
+}
+
+.navbar {
+    background-color: transparent;
+    background: transparent;
+    border-width: 0px;
+    min-height: 0px;
+}
+#rolers li a{
+   color: #777;
+}
+#rolers li a:hover{
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+ }
+ #logo{
+     margin-left: auto;
+     margin-right: auto;
+     width: 50%
+ }
+ #user div{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+ }
+.roller-selected h3{
+    color: #00E6A8;
+}
+.footer-popups{
+    position: fixed;
+    bottom: 3px;
+    z-index: 3;
+}
+
+.footer-popups div{
+    border: 1px solid #000000 ;
+    background-color: #333333;
+    margin-top: 3px;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    padding: 5px 10px 5px 10px;
+}
+.footer-popups div a{
+    text-decoration: underline;
+}
+.footer-popups i:hover {
+    cursor: pointer;
+}
+.modal-content{
+    background-image: url("../assets/images/Auction_Win_Graphic.png");
+    background-position:center center;
+    background-size:cover; 
+}

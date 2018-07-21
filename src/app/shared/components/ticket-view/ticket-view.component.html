@@ -1,0 +1,53 @@
+<div class="container" >
+  <div class="row">
+    <div class="col-md-4 reply ">
+      <div class="row">
+        <button class="btn btn-default" (click)="setStatus()"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Go Back to list</button>
+      </div>
+      <div class="row">
+        <strong>Status:</strong>
+        <p>{{selectTicket.status}}</p>
+        <strong>Department:</strong>
+        <p>{{selectTicket.department}}</p>
+        <strong>Ticket Opened:</strong>
+        <p>{{selectTicket.dateCreated}}</p>
+        <strong>Last Updated:</strong>
+        <p>{{selectTicket.lastUpdatedFormated}}</p>
+      </div>
+      <div class="row">
+        <textarea [(ngModel)]="response" id="reply-text" rows="7" placeholder="Add Reply"></textarea>
+      </div>
+      <p *ngFor="let file of fileNames; let i = index">
+        {{file}}  <i class="fa fa-times-circle" (click)="removeFile(file,i+1)" aria-hidden="true"></i>
+      </p>
+      <p *ngIf="invalidFile">
+        Wrong file type
+      </p>
+      <div class="row">
+        <form id="frmUploader" enctype="multipart/form-data">
+          <label class="btn btn-success" id="uploadButton"><i class="fa fa-paperclip"></i> Upload <input class ="hidden" (change)="fileAdd()" type="file" #fileUpload name="file"></label><br>
+          <button class="btn btn-success" (click)="sendReply()">Reply</button>
+        </form>
+      </div>
+      <div class="row">
+        <button class="btn btn-danger" (click)="closeTicket()">Close Ticket</button>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="row">
+        <h2>Ticket #{{selectTicket.ticketNum}}: {{selectTicket.subject}}</h2>
+        <div [ngClass]="{'staffMes': mes.isStaff }" class="text-area" *ngFor="let mes of selectTicket.messages; let i = index">
+          <div>
+            <p *ngIf="mes.isStaff" style="color:#01E5A8;" > {{i +1 }}. Staff reply by {{mes.userName}} on {{mes.date}}</p>
+            <p *ngIf="!mes.isStaff" >{{i +1 }}. Sent by {{mes.userName}} on {{mes.date}}</p>
+            <p [innerHtml] = "mes.message"></p>
+          </div>
+          <div *ngFor="let name of mes.fileNames">
+              <a  (click)="getImage(i+1,name)" > {{name}} </a>
+              <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

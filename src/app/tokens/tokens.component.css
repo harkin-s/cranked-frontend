@@ -1,0 +1,148 @@
+.skin{
+    margin: 0px;
+    cursor: pointer; cursor: hand; 
+}
+.skin p{
+    font-size: small;
+    text-align: center;
+}
+.selectTab{
+   font-weight: bold;
+}
+
+.selectSkin{
+    border-color: cornflowerblue;
+    background-color: aliceblue;
+}
+
+.adminTabs{
+    margin-bottom: 0.5%;
+}
+
+li{
+        cursor: pointer; cursor: hand;
+}
+
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}
+
+.timeForm{
+    margin-bottom: 1.5%;
+}
+.opSearch{
+    margin-bottom: 1%;
+}
+.pageNav p{
+    text-align: left;
+    margin-left: 60px
+}
+.pageNav ul{
+    margin-bottom: auto;
+}
+div.opSkin div{
+    box-shadow: 2px 2px 3px #888888;
+    cursor: pointer; cursor: hand;
+    text-align: center;
+}
+.search{
+    margin-left: 35%;
+    margin-bottom: 3%;
+}
+
+.page-body{
+    margin-top: 40px;
+}
+
+/* Price points */
+.price-option{
+    text-align: center;
+}
+.price-img {
+    opacity: 0.06;
+}
+.thumbnail-text{
+    position: absolute;
+    top: 45%;
+    left: 0;
+    width: 100%;
+}
+.thumbnail{
+    position:relative;
+    border-style: solid;  
+    border-color: #212121;
+    border-width: 1px; 
+}
+
+
+.modal-text{
+    margin-left:15px;
+    margin-right:15px;
+    text-align: left !important;
+}
+
+.big-icon {
+    font-size: 100px;
+    margin: 30, 10 ,10 ,30 !important;
+    padding: 30, 10 ,30 ,10 !important;
+}
+
+.biggest-icon{
+    font-size: 130px;
+}
+
+.payment-option > .thumbnail{
+    height: 230px;
+}
+
+.checkout-button{
+    text-align: center;
+}
+
+.selectedMethod{
+    border-color: cornflowerblue;
+    background-color: aliceblue;
+}
+
+.payment-option > .thumbnail {
+    cursor: pointer; cursor: hand;
+}
+
+.skinList {
+    margin-top: 20px;
+}
+
+/*modal*/
+.modal-body{
+    margin-left:15px;
+    margin-right:15px;
+    text-align: center !important;
+}
+
+.modal-body p{
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+
+.modal-body i{
+    margin-top: 50px;
+}
+
+.modal-header{
+    border-bottom: none;
+}
+
+.modal-header i{
+    color: #b5b5b5
+}
+
+hr {
+    border: none;
+    height: 1px;
+    color: #333; /* old IE */
+    background-color: #333; /* Modern Browsers */
+}

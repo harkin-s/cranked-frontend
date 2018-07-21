@@ -1,0 +1,27 @@
+.modal-content { 
+    background-color: #FAFFF3 !important; 
+ }
+
+.modal-content {
+    height: 100px;
+    color: green;
+}
+
+.modal-text{
+    font-size: 18px;
+}
+
+
+.fa-times{
+    color: green !important;
+}
+
+.fa-check-circle{
+    padding-right:50px;
+}
+
+.modal-dialog{
+    position: relative;
+    top: 40%;
+    transform: translateY(-40%);
+  }

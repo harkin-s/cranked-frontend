@@ -1,0 +1,36 @@
+.accInfo input{
+    width: 70%;
+    margin-bottom:2%;
+    margin-right: 2%;
+
+}
+.sendTokens input{
+    width:70%;
+    margin-bottom: 2%;
+    margin-right: 2%;
+}
+
+.sendTokens .alert{
+    width: 70%;
+    padding: 5px 5px 5px 5px;
+}
+.sendTokens div{
+    padding-left:0px; 
+}
+.accInfo .fa-check{
+    color: #00E6A8;
+}
+
+.accInfo .fa-times{
+    color: #FF4982;
+}
+.table>tbody+tbody{
+    border: none;
+}
+.table>thead>tr>th{
+    border: none;
+}
+
+.subscriptionStatus{
+    padding-top: 60px;
+}

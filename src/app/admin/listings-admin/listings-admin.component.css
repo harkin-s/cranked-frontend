@@ -1,0 +1,52 @@
+.listing{
+    margin-right: 4%;
+    margin-left: 4%;
+}
+.listing img:hover{
+    cursor: pointer; 
+}
+h2{
+    text-align: center;
+}
+
+.listing i:hover{
+    cursor: pointer; 
+}
+
+.modify input{
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+} 
+h4{
+    text-align: center;
+}
+button{
+    width:100px;
+}
+#listingFooter .list-inline>li{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+.adminTabs{
+    margin-bottom: 15px;
+    margin-top: 15px; 
+    border: none;
+}
+
+.adminTabs li a{
+    color: #777;
+    
+}
+.adminTabs li a:hover{
+    color: #ffffff;
+    background-color:transparent;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+.modify{
+    text-align: center;
+}

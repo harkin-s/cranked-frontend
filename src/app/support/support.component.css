@@ -1,0 +1,28 @@
+#addTicket input{
+    margin-top: 10px; 
+}
+
+#addTicket textarea{
+    margin-top: 10px;
+}
+
+.form-group button{
+    margin-top: 2%;
+}
+
+.ng-valid[required], .ng-valid.required  {
+    border-left: 2px solid #42A948; /* green */
+}
+  
+  .ng-invalid:not(form)  {
+    border-left: 2px solid #a94442; /* red */
+}
+
+.square-popup{
+    min-height: 20vh;
+}
+
+.square-popup div{
+    margin-bottom: 10%;
+    margin-top: 5%;
+}
