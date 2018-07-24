@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { MyDatePickerModule } from 'mydatepicker';
 import { MicroBidComponent } from './micro/micro-bid.component';
 import { AuctionServices } from './shared/auctions.services';
 import { routing } from './app.routes';
@@ -31,12 +30,8 @@ import { SupportComponent } from './support/support.component';
 import { FaqComponent } from './faq/faq.component';
 import { AffiliatesComponent } from './affiliates/affiliates.component';
 import { WinsComponent } from './wins/wins.component';
-import { MaterialModule } from './material.module';
-import {FlexLayoutModule}  from '@angular/flex-layout';
-
 
 @NgModule({
-
   declarations: [
     AppComponent,
     MicroBidComponent,
@@ -63,9 +58,6 @@ import {FlexLayoutModule}  from '@angular/flex-layout';
     RouterModule,
     HttpModule,
     HttpClientModule,
-    MyDatePickerModule,
-    FlexLayoutModule,
-    MaterialModule,
     routing,
     BrowserAnimationsModule,
     SharedModule

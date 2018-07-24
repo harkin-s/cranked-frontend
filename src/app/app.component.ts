@@ -7,6 +7,7 @@ import {AuthGuard} from './shared/auth-guard.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   user: any;
   userLogged: Boolean =false;
@@ -16,7 +17,6 @@ export class AppComponent {
   showCookies: boolean = true;
 
   constructor(private service: UserService ,private authService: AuthGuard) {
-
   }
   ngOnInit() {
 

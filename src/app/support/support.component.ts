@@ -41,8 +41,9 @@ departments: String[] =  ['General Enquiries', 'Billing', 'Auction Issues', 'Ite
       message: this.message,
       files: this.fileNames
     };
+  }
 
-    this.userService.createTicket(ticket, this.imageForm).subscribe((res) => {
+    this.userService.createTicket(ticket, this.fileToUpload).subscribe((res) =>{
       document.getElementById('ticketCreatedButton').click();
       this.selectTicket = res;
       const newDate = new Date(this.selectTicket.dateCreated);
@@ -62,7 +63,7 @@ departments: String[] =  ['General Enquiries', 'Billing', 'Auction Issues', 'Ite
 
   }
 
-  fileAdd(files: FileList) {
+  fileAdd(files){
     const fileBrowser = this.fileInput.nativeElement;
     if (files[0].size < 1024 * 1024 * 5) {
 
@@ -85,23 +86,20 @@ departments: String[] =  ['General Enquiries', 'Billing', 'Auction Issues', 'Ite
     }
   }
 
-  removeFile(fileName, num) {
-    this.imageForm.delete('image_' + num);
-    this.fileNames.splice(fileName);
+  removeFile(fileName){
+    delete this.fileName[fileName];
   }
 
-  clearData() {
+  clearData(){
     this.department = '';
     this.email  = '';
     this.subject = '';
     this.message = '';
-    this.imageForm = new FormData();
+    this.fileToUpload = Array<Object>;
     this.fileNames = [];
   }
-  goBack() {
+  goBack(){
     this.viewTicket = false;
   }
-
-
 
 }
