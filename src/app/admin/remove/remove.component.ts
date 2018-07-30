@@ -13,14 +13,14 @@ export class RemoveComponent implements OnInit {
   constructor(private service: AuctionServices) { }
 
   ngOnInit() {
-    this.service.getAllAuctions().subscribe((res) => {
+    this.service.getAllAuctions().then((res) => {
       this.activeAuctions = res;
     });
   }
 
   removeSelectAuction() {
     if(this.selectAuctionId){
-      this.service.removeAuction(this.selectAuctionId).subscribe((res) => {
+      this.service.removeAuction(this.selectAuctionId).then((res) => {
         remove(this.activeAuctions, (item) => {
           return item._id === this.selectAuctionId;
         });

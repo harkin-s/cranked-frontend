@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './shared/user.service';
-import {AuthGuard} from './shared/auth-guard.service';
+import { AuthGuard } from './shared/auth-guard.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +22,6 @@ export class AppComponent {
 
     this.service.currentUser.subscribe(user => this.user = user);
     this.service.getUser().subscribe(res => {
-
     if(res.user) {
     this.user = res.user;
     this.user.highRoller = false;

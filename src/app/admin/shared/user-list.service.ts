@@ -6,28 +6,27 @@ export class UserListService {
 
   constructor(private http: Http) { }
 
-  getUsers(){
-      return this.http.get('/api/userList').map(res=>res.json());
-  }
+  getUsers(): any{
+      return this.http.get('/api/userList').toPromise()  }
   
-  giveTokens(data:Object) {
+  giveTokens(data:Object): any {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('/api/giveTokens', JSON.stringify(data),{headers:headers})
-      .map(res => res.json());
+      .toPromise();
   }
 
-  takeTokens(data:Object) {
+  takeTokens(data:Object): any {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('/api/takeTokens', JSON.stringify(data),{headers:headers})
-      .map(res => res.json());
+      .toPromise();
   }
 
-  banUser(data: Object){
+  banUser(data: Object): any{
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('/api/banUser', JSON.stringify(data),{headers:headers})
-      .map(res => res.json());
+      .toPromise();
   }
 }

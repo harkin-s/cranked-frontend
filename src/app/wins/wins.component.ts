@@ -21,7 +21,7 @@ export class WinsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.getUserWins().subscribe(res => {
+    this.service.getUserWins().then(res => {
       this.wins = res;
       this.wins.map(win =>{
         if(win.payedDate){

@@ -3,6 +3,7 @@ import { AdminComponent } from '../admin.component'
 import { AdminService } from '../shared/admin.service';
 import { OrderByPipe } from '../../shared/pipes/orderby.pipe';
 import * as FileSaver from "file-saver";
+
 @Component({
   selector: 'app-admin-support',
   templateUrl: './admin-support.component.html',
@@ -35,7 +36,7 @@ AdminComponent :any;
   }
 
   ngOnInit() {
-    this.adminService.getTickets().subscribe((res)=>{
+    this.adminService.getTickets().then((res)=>{
       //this.tickets = res;
       this.records = res;
       this.records.forEach(tic => {
@@ -79,8 +80,8 @@ AdminComponent :any;
     });
     this.selectTicket.updated.push(now.toJSON());
 
-    this.adminService.sendReply(data).subscribe();
-    this.adminService.uploadFile(this.imageForm, this.selectTicket.ticketNum, this.selectTicket.messages.length).subscribe();
+    this.adminService.sendReply(data).then();
+    this.adminService.uploadFile(this.imageForm, this.selectTicket.ticketNum, this.selectTicket.messages.length).then();
     this.clearData();
   };
 
@@ -89,7 +90,7 @@ AdminComponent :any;
     let id = {
       id: this.selectTicket._id
     };
-    this.adminService.closeTicket(id).subscribe();
+    this.adminService.closeTicket(id).then();
   }
 
   fileAdd(){
@@ -119,7 +120,7 @@ AdminComponent :any;
 
   getImage(messageNum, imageName){
     return this.adminService.getTicketImage(this.selectTicket.ticketNum, messageNum, imageName)
-      .subscribe((res)=>{
+      .then((res)=>{
         var blob = new Blob([res], {type: 'image/png'});
         FileSaver.saveAs(blob, imageName);
       });

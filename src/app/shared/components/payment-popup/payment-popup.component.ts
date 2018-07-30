@@ -4,6 +4,7 @@ import {
 import { NgForm } from '@angular/forms';
 import { PaymentService } from '../../payment.service';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
+import { element } from '../../../../../node_modules/@angular/core/src/render3/instructions';
 
 @Component({
   selector: 'app-payment-popup',
@@ -45,7 +46,7 @@ export class PaymentPopupComponent implements OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.card = elements.create('card');
+    this.card = element.create('card');
     this.card.mount(this.cardInfo.nativeElement);
     this.card.addEventListener('change', this.cardHandler);
   }

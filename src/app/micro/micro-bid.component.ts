@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuctionServices } from '../shared/auctions.services';
-import { Observable, Subscription } from 'rxjs/Rx';
-import { trigger,state,style,animate,transition} from '@angular/animations';
+import { Observable, timer } from 'rxjs';
+import { trigger,style,animate,transition} from '@angular/animations';
 import { UserService } from '../shared/user.service';
 import * as _ from "lodash";
 import * as moment from "moment";
@@ -35,7 +35,7 @@ export class MicroBidComponent implements OnInit {
 
 
   constructor(private service: AuctionServices, private userService: UserService) {
-    this.countDown = Observable.timer(0,1000);
+    this.countDown = timer(0,1000);
     this.Math = Math;
     this.Moment = moment;
 

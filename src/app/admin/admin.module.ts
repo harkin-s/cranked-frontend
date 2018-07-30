@@ -4,8 +4,6 @@ import { AuctionServices } from '../shared/auctions.services';
 import { AdminRouting } from './admin.routes';
 import { AdminComponent } from './admin.component';
 import { SharedModule } from '../shared/shared.module';
-import { InfiniteScrollModule } from 'angular2-infinite-scroll';
-import { MyDatePickerModule } from 'mydatepicker';
 import { FormsModule } from '@angular/forms';
 import { AdminSupportComponent } from './admin-support/admin-support.component';
 import { AdminService } from './shared/admin.service';
@@ -28,9 +26,7 @@ import { RemoveComponent } from './remove/remove.component';
     AdminRouting,
     SharedModule,
     CommonModule,
-    MyDatePickerModule,
-    FormsModule,
-    InfiniteScrollModule
+    FormsModule
   ],
   providers: [AuctionServices, AdminService, UserListService],
 })

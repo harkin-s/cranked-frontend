@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {AuctionServices} from '../../shared/auctions.services';
-import { InfiniteScroll } from 'angular2-infinite-scroll';
 import {filter, isEmpty} from 'lodash';
 import {appendItems} from '../admin-shared';
 import {auction} from '../auction';

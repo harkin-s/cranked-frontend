@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ListingsService } from '../shared/listings.service';
 import * as _ from "lodash";
+
 @Component({
   selector: 'app-listings',
   templateUrl: './listings.component.html',

@@ -33,7 +33,7 @@ export class AccountPageComponent implements OnInit {
 
   ngOnInit() {
     this.userService.currentUser.subscribe(user => this.userObj = user);
-    this.userService.getUserInfo().subscribe((res) => {
+    this.userService.getUserInfo().then((res) => {
       this.user = res[0];
       var newDate = new Date(this.user.joinDate)
       this.user.joinDate = newDate.toLocaleDateString('en-GB');
@@ -102,7 +102,7 @@ export class AccountPageComponent implements OnInit {
 
     if (this.user.tokens >= this.receiverAmt) {
 
-      this.userService.transferTokens(receiver).subscribe(res => {
+      this.userService.transferTokens(receiver).then(res => {
         if (res.error) {
           this.sendError = true;
           this.errorMessage = res.mes;
@@ -139,7 +139,7 @@ export class AccountPageComponent implements OnInit {
     let item = {
       listingId: id
     };
-    this.userService.removeListing(item).subscribe();
+    this.userService.removeListing(item).then();
     let index = 0;
     this.user.saleHistory.forEach(sale => {
       if (sale._id === id) {
@@ -152,7 +152,7 @@ export class AccountPageComponent implements OnInit {
 
   cancelSubscription() {
     this.paymentService.cancelStripeSubscription()
-      .subscribe(res => {
+      .then(res => {
         console.log(res);
         if (res.status === 'canceled') {
           this.user.subscriptionStatus = 'cancelled';

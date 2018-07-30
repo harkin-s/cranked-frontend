@@ -6,28 +6,28 @@ export class AdminService {
 
   constructor(private http: Http) { }
 
-  getTickets() {
-    return this.http.get('/api/allTickets').map((res) => res.json());
+  getTickets(): any {
+    return this.http.get('/api/allTickets').toPromise()
   }
 
-  sendReply(data) {
+  sendReply(data): any {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     return this.http
     .put('/api/staffTicketReply', JSON.stringify(data), { headers: headers })
-    .map(res => res.json());
+    .toPromise();
   }
 
-  closeTicket(id) {
+  closeTicket(id): any {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     return this.http
     .put('/api/closeTicket', JSON.stringify(id), { headers: headers })
-    .map(res => res.json());
+    .toPromise();
   }
-  uploadFile(file, id, messNum) {
+  uploadFile(file, id, messNum): any {
     const headers = new Headers();
     headers.delete('Content-Type');
     const params = new URLSearchParams();
@@ -36,10 +36,10 @@ export class AdminService {
 
     return this.http
     .post('/api/uploadFile', file, { headers: headers, params: params })
-    .map(res => res.json());
+    .toPromise();
   }
 
-  getTicketImage(ticketNum, messageNum, imageName) {
+  getTicketImage(ticketNum, messageNum, imageName): any {
     const headers = new Headers();
     const params = new URLSearchParams();
     params.set('ticketNum', ticketNum);
@@ -50,26 +50,26 @@ export class AdminService {
       params: params
     });
     options.responseType = ResponseContentType.Blob;
-    return this.http.get('/api/ticketImage', options).map(res => res.blob() );
+    return this.http.get('/api/ticketImage', options).toPromise();
   }
 
-  getAdmListings() {
-    return this.http.get('/api/admListings').map(res => res.json())
+  getAdmListings(): any {
+    return this.http.get('/api/admListings').toPromise()  
   }
 
-  cancelListing(listing) {
+  cancelListing(listing): any {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('/api/cancelListing', JSON.stringify(listing), {headers: headers});
+    return this.http.post('/api/cancelListing', JSON.stringify(listing), {headers: headers}).toPromise();
   }
 
-  modifyListing(listing) {
+  modifyListing(listing): any {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('/api/modifyListing', JSON.stringify(listing), { headers: headers});
   }
 
-  removeFromAdm(listing) {
+  removeFromAdm(listing): any {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('/api/removeFromAdm', JSON.stringify(listing), { headers: headers});

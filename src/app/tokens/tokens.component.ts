@@ -4,8 +4,6 @@ import { PaymentService } from '../shared/payment.service';
 import { UserService } from '../shared/user.service';
 import { AuctionServices } from '../shared/auctions.services';
 import { PaymentPopupComponent } from '../shared/components/payment-popup/payment-popup.component';
-import * as _ from "lodash";
-import * as $ from 'jquery';
 import * as io from 'socket.io-client';
 
 @Component({

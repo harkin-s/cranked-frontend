@@ -7,8 +7,8 @@ export class ListingsService{
 
     constructor(private http: HttpClient ){}
 
-    getListings(){
-        return this.http.get('/api/getListings').map(res => res)
+    getListings(): any{
+        return this.http.get('/api/getListings').toPromise();
     }
 
 

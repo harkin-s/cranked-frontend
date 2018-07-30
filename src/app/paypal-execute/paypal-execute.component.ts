@@ -20,7 +20,7 @@ export class PaypalExecuteComponent implements OnInit {
 
     var payerId = this.route.snapshot.queryParams.PayerID;
     var paymentId = this.route.snapshot.queryParams.paymentId
-    this.service.executePayment(payerId, paymentId).subscribe(payment => {
+    this.service.executePayment(payerId, paymentId).then(payment => {
       if (payment.state == 'approved'){
         this.router.navigate(['/tokens', {paymentSuccess: true}]);    
       }else{

@@ -22,7 +22,7 @@ constructor(private userListService: UserListService) {
 }
 
   ngOnInit() {
-    this.userListService.getUsers().subscribe((res)=>{
+    this.userListService.getUsers().then((res)=>{
       this.records = res;
       var now = new Date();
       // Format all of the records into the relevent fileds
@@ -71,7 +71,7 @@ constructor(private userListService: UserListService) {
       userid: this.user._id,
       tokens: this.tokens
     }
-    this.userListService.giveTokens(data).subscribe();
+    this.userListService.giveTokens(data).then();
     this.user.tokens += this.tokens;
   }
   banUser(value){
@@ -79,7 +79,7 @@ constructor(private userListService: UserListService) {
       userid: this.user._id,
       value: value
     };
-    this.userListService.banUser(data).subscribe();
+    this.userListService.banUser(data).then();
     this.user.isBanned = value;
   }
   takeTokens(){
@@ -87,7 +87,7 @@ constructor(private userListService: UserListService) {
       userid: this.user._id,
       tokens: this.tokens
     }
-    this.userListService.takeTokens(data).subscribe();
+    this.userListService.takeTokens(data).then();
     this.user.tokens -= this.tokens;
   }
 

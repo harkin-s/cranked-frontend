@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { auction } from '../admin/auction';
-import {replace} from 'lodash';
+
 import 'rxjs/add/operator/map';
 @Injectable()
 export class AuctionServices {
@@ -10,59 +10,59 @@ export class AuctionServices {
   }
 
   // Get all posts from the API
-  getAllAuctions() {
+  getAllAuctions() : any{
     return this.http.get('/api/auctions')
-      .map(res => res.json());
+      .toPromise();
   }
 
-  addAuction(auction: auction) {
+  addAuction(auction: auction): any {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http
       .put('/api/addAuction', JSON.stringify(auction), { headers: headers })
-      .map(res => res.json());
+      .toPromise();
   }
 
-  getPrice(weaponName: string) {
+  getPrice(weaponName: string): any {
     let params: URLSearchParams = new URLSearchParams();
     params.set("name", weaponName);
     return this.http.get('/api/getPrice', { search: params })
-      .map(res => res.json());
+      .toPromise();
   }
 
-  getImage(skinName: string){
+  getImage(skinName: string): any{
     let params: URLSearchParams = new URLSearchParams();
     skinName = skinName.replace(/\s/g,'');
     console.log(skinName);
     params.set("name", skinName);
     return this.http.get('/api/skinImage', { search: params })
-      .map(res => res.json());
+      .toPromise();
   }
 
-  getInventory() {
+  getInventory(): any {
     return this.http.get('/api/getInventory')
-      .map(res => res.json());
+      .toPromise();
   }
 
-  getOpskinsInventory() {
+  getOpskinsInventory(): any {
     return this.http.get('/api/getOpskinsInventory')
-      .map(res => res.json());
+      .toPromise();
   }
 
-  getUserInventory() {
+  getUserInventory(): any {
     return this.http.get('/api/getUserInventory')
-      .map(res => res.json());
+      .toPromise();
   }
 
-  removeAuction(id) {
+  removeAuction(id): any {
     let params: URLSearchParams = new URLSearchParams();
     params.set('id', id);
-    return this.http.delete('/api/removeAuction', { search: params}).map(res => res.json());
+    return this.http.delete('/api/removeAuction', { search: params}).toPromise();
   }
-  getWear(link: string) {
+  getWear(link: string): any {
     let params = new URLSearchParams();
     params.set('link', link);
     return this.http.get('/api/wear', { search: params })
-      .map(res => res.json());
+      .toPromise();
   }
 }

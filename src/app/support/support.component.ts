@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../shared/user.service';
-import * as FileSaver from 'file-saver';
-import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-support',
@@ -41,7 +39,7 @@ departments: String[] =  ['General Enquiries', 'Billing', 'Auction Issues', 'Ite
       message: this.message,
       files: this.fileNames
     };
-  }
+  
 
     this.userService.createTicket(ticket, this.fileToUpload).subscribe((res) =>{
       document.getElementById('ticketCreatedButton').click();
@@ -87,7 +85,7 @@ departments: String[] =  ['General Enquiries', 'Billing', 'Auction Issues', 'Ite
   }
 
   removeFile(fileName){
-    delete this.fileName[fileName];
+    delete this.fileNames[fileName];
   }
 
   clearData(){
@@ -95,7 +93,7 @@ departments: String[] =  ['General Enquiries', 'Billing', 'Auction Issues', 'Ite
     this.email  = '';
     this.subject = '';
     this.message = '';
-    this.fileToUpload = Array<Object>;
+    this.fileToUpload = Array<Object>();
     this.fileNames = [];
   }
   goBack(){

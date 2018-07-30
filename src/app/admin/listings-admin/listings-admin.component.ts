@@ -18,7 +18,7 @@ ourCut :number  = 0;
   }
 
   ngOnInit() {
-    this.adminService.getAdmListings().subscribe(res=>{
+    this.adminService.getAdmListings().then(res=>{
       this.listings = res;
 
       this.listings = _.sortBy(this.listings, [function(o) { return o.status; }]);
@@ -34,7 +34,7 @@ ourCut :number  = 0;
     let data = {
       id: listing._id
     };
-    this.adminService.cancelListing(data).subscribe();
+    this.adminService.cancelListing(data).then();
     let index = 0;
     this.listings.forEach(item=>{
       if(item._id === listing._id){
@@ -49,7 +49,7 @@ ourCut :number  = 0;
       id : this.selectListing._id,
       newPrice : this.newPrice
     };
-    this.adminService.modifyListing(data).subscribe();
+    this.adminService.modifyListing(data).then();
     this.listings.forEach(listing=>{
       if(listing._id == this.selectListing._id){
         listing.salePrice = this.newPrice;
@@ -61,7 +61,7 @@ ourCut :number  = 0;
     let listing = {
       id: list._id
     };
-    this.adminService.removeFromAdm(listing).subscribe();
+    this.adminService.removeFromAdm(listing).then();
     let index = 0;
     this.listings.forEach(listing=>{
       if(listing._id == list._id){

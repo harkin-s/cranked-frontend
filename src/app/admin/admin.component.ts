@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {auction} from './auction';
 import {AuctionServices} from '../shared/auctions.services';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {IMyDpOptions} from 'mydatepicker';
 import {appendItems} from './admin-shared';
 import * as _ from 'lodash';
 
@@ -29,7 +28,7 @@ export class AdminComponent implements OnInit {
   sourceOptions: any = ['Bot Inv', 'OpSkins'];
   source: string = '';
   skin: any = {};
-  numberOfPages: number = 0;
+  numberOfPages: number[];
   currentPage: number = 0;
   selectDate: any;
   startHour: number;
@@ -47,12 +46,7 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.getInventory();
   }
-
-  myDatePickerOptions: IMyDpOptions = {
-    // other options...
-    dateFormat: 'dd.mm.yyyy',
-  };
-
+  //TODO Replace date picker wiht angular date picker
 
   submitted = false;
 
@@ -73,14 +67,14 @@ export class AdminComponent implements OnInit {
       'contextid': this.auction.contextid
     });
     if (item === undefined) {
-      this.service.addAuction(this.auction).subscribe();
+      this.service.addAuction(this.auction).then();
       //Remove added auction from descriptions
       // _.remove(this.inventory.descriptions, (item) => {
       //   return (item.assetid === this.auction.assetid && item.contextid === this.auction.contextid && item.appid === this.auction.appid);
       // });
       // Remove from page view
-      _.remove(this.pageInventory, (item) => {
-        return (item.assetid === this.auction.assetid && item.contextid === this.auction.contextid && item.appid === this.auction.appid);
+      _.remove(this.pageInventory, ({assetid, contextid, appid}) => {
+        return (assetid === this.auction.assetid && contextid === this.auction.contextid && appid === this.auction.appid);
       });
       var numTo = Math.ceil(this.inventory.descriptions.length / 12);
       this.numberOfPages = _.range(1, (numTo + 1));
@@ -98,21 +92,22 @@ export class AdminComponent implements OnInit {
       this.inventory = res;
 
       //Remove unmarktable items
-      _.remove(this.inventory.descriptions, (item) => {
-        return (!(item.tags[1].category == 'Weapon'));
+      _.remove(this.inventory.descriptions, ({tags}) => {
+        return (!(tags[1].category == 'Weapon'));
       });
 
       //Add asset id and context id for UID
-      this.inventory.descriptions.forEach((item) => {
-        const asset = _.find(this.inventory.assets, {'classid': item.classid});
-        item.assetid = asset.assetid;
-        item.contextid = asset.contextid;
-      });
+      // this.inventory.descriptions.forEach((item) => {
+      //   const {assetid, } = _.find(this.inventory.assets, {'classid': item.classid});
+      //   item.assetid = asset.assetid;
+      //   item.contextid = asset.contextid;
+      // });
 
       //Remove auctions that are already live
+
       this.activeAuctions.forEach(element => {
-        _.remove(this.inventory.descriptions, (inv) => {
-          return (inv.assetid == element.assetid && inv.contextid == element.contextid && inv.appid == element.appid);
+        _.remove(this.inventory.descriptions, ({assetid, contextid, appid }) => {
+          return (assetid == element.assetid && contextid == element.contextid && appid == element.appid);
         });
       });
 
@@ -131,7 +126,7 @@ export class AdminComponent implements OnInit {
   selectSkin(inv) {
     this.auction = new auction();
     this.auction.name = inv.name;
-    this.service.getPrice(inv.market_hash_name).subscribe(res => {
+    this.service.getPrice(inv.market_hash_name).then(res => {
       this.auction.value = res;
     });
     var link = inv.actions[0].link;
