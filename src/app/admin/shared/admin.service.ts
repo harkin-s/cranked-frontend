@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, URLSearchParams, ResponseContentType } from '@angular/http';
-import 'rxjs/add/operator/map';
+
 @Injectable()
 export class AdminService {
 

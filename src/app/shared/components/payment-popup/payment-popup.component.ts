@@ -45,11 +45,11 @@ export class PaymentPopupComponent implements OnDestroy {
     this.card.destroy();
   }
 
-  ngAfterViewInit() {
-    this.card = element.create('card');
-    this.card.mount(this.cardInfo.nativeElement);
-    this.card.addEventListener('change', this.cardHandler);
-  }
+  // ngAfterViewInit() {
+  //   this.card = element.create('card');
+  //   this.card.mount(this.cardInfo.nativeElement);
+  //   this.card.addEventListener('change', this.cardHandler);
+  // }
 
   onChange({ error }) {
     if (error) {
@@ -87,18 +87,17 @@ export class PaymentPopupComponent implements OnDestroy {
     });
   }// end of createPayment
 
-  onStripeFormCheckout(form: NgForm) {
-    stripe.createToken(this.card).then((result) => {
-      if (result.error) console.log('Something is wrong:', result.error);
-      const token = result.token;
-      if (this.subscription) {
-        this.createStripeSubscription(token);
-      } else {
-        this.createStripePayment(token);
-      }
-    });
-
-  }
+  // onStripeFormCheckout(form: NgForm) {
+  //   stripe.createToken(this.card).then((result) => {
+  //     if (result.error) console.log('Something is wrong:', result.error);
+  //     const token = result.token;
+  //     if (this.subscription) {
+  //       this.createStripeSubscription(token);
+  //     } else {
+  //       this.createStripePayment(token);
+  //     }
+  //   });
+  // }
 
   createStripePayment(token = null) {
     this.state = 'waiting';
