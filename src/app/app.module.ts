@@ -20,7 +20,6 @@ import { AccountPageComponent } from './account-page/account-page.component';
 import { ListingsComponent } from './listings/listings.component';
 import { ListingsService } from './shared/listings.service';
 import { PaymentPopupComponent } from './shared/components/payment-popup/payment-popup.component';
-import { fileSaver } from "file-saver";
 import { PaymentSuccessPopupComponent } from './shared/components/payment-success-popup/payment-success-popup.component';
 import { TicketViewComponent } from './shared/components/ticket-view/ticket-view.component';
 import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
@@ -59,8 +58,7 @@ import { WinsComponent } from './wins/wins.component';
     HttpClientModule,
     routing,
     BrowserAnimationsModule,
-    SharedModule,
-    fileSaver
+    SharedModule
   ],
   providers: [AuctionServices, AuthGuard, UserService, PaymentService, ListingsService],
   bootstrap: [AppComponent],

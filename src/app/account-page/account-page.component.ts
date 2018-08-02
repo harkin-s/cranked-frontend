@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PlatformLocation } from "@angular/common";
 import { UserService } from '../shared/user.service';
 import { PaymentService } from '../shared/payment.service';
-import { OrderByPipe } from '../shared/pipes/orderby.pipe';
+// import { OrderByPipe } from '../shared/pipes/orderby.pipe';
 
 @Component({
   selector: 'app-account-page',

@@ -2,7 +2,7 @@ import { Component, OnInit ,ViewChild} from '@angular/core';
 import { AdminComponent } from '../admin.component'
 import { AdminService } from '../shared/admin.service';
 import { OrderByPipe } from '../../shared/pipes/orderby.pipe';
-import * as FileSaver from "file-saver";
+
 
 @Component({
   selector: 'app-admin-support',
@@ -122,7 +122,7 @@ AdminComponent :any;
     return this.adminService.getTicketImage(this.selectTicket.ticketNum, messageNum, imageName)
       .then((res)=>{
         var blob = new Blob([res], {type: 'image/png'});
-        FileSaver.saveAs(blob, imageName);
+        //FileSaver.saveAs(blob, imageName);
       });
   }
   //Used to change sort directions

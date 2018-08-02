@@ -11,7 +11,7 @@
         <div class="thumbnail" (click)="selectSkin(win)">
           <p>{{win.name}} - {{win.wear}}</p>
           <i class="fa fa-info-circle" style="cursor: pointer" (click)="tooltip.show()"></i>
-          <span matTooltip = {{tooltipMessage}} [matTooltipPosition]="position" #tooltip="matTooltip"></span>
+          <!-- <button mat-raised-button matTooltip = {{tooltipMessage}} [matTooltipPosition]="position" #tooltip="matTooltip"></button> -->
           <img src={{win.imageURL}} alt="">
           <p>Max Price: ${{win.maxPrice}}</p>
           <p>Final Price: ${{win.finalPrice}}</p>

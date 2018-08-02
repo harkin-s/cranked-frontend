@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {UserService} from '../../user.service';
-import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-ticket-view',
@@ -57,10 +56,10 @@ wrongFileType: boolean = false;
     this.fileNames.splice(fileName);
   }
 
-  async getImage(messageNum, imageName){
-    const file = await this.userService.getTicketImage(this.selectTicket.ticketNum, messageNum, imageName);
-    FileSaver.saveAs(file, imageName);
-  }
+  // async getImage(messageNum, imageName){
+  //   const file = await this.userService.getTicketImage(this.selectTicket.ticketNum, messageNum, imageName);
+  //   FileSaver.saveAs(file, imageName);
+  // }
 
   fileAdd(){
     let fileBrowser = this.fileInput.nativeElement;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/user.service';
-import { OrderByPipe } from '../shared/pipes/orderby.pipe';
+// import { OrderByPipe } from '../shared/pipes/orderby.pipe';
 import * as _ from 'lodash';
 
 @Component({

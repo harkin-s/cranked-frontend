@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderByPipe } from '../../shared/pipes/orderby.pipe';
 import { UserListService } from '../shared/user-list.service';
 
 @Component({

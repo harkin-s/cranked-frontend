@@ -19,7 +19,7 @@ export class AppComponent {
   constructor(private service: UserService ,private authService: AuthGuard) {
   }
   ngOnInit() {
-
+    
     this.service.currentUser.subscribe(user => this.user = user);
     this.service.getUser().subscribe(res => {
     if(res.user) {
