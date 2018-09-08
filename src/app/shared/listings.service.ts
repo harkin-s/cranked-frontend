@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 
@@ -8,7 +9,7 @@ export class ListingsService{
     constructor(private http: HttpClient ){}
 
     getListings(): any{
-        return this.http.get('/api/getListings').toPromise();
+        return this.http.get(`${environment.apiUrl}/getListings`).toPromise();
     }
 
 

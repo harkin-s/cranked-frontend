@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders, HttpRequest, HttpParams} from '@angular/common/
 import {Router} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
 import * as io from 'socket.io-client';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class UserService {
@@ -11,11 +12,12 @@ export class UserService {
   public socket;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.socket = io();
+    this.socket = io(environment.apiUrl);
   }
   //Get user details
   getUser(): any {
-    return this.http.get('/api/getUser');
+    console.log(environment)
+    return this.http.get(`${environment.apiUrl}/getUser`).toPromise();
   }
 
   updateUser(userData: any): any {
@@ -23,7 +25,7 @@ export class UserService {
   }
 
   checkAccess(): any {
-    return this.http.get('/api/hasAccess');
+    return this.http.get(`${environment.apiUrl}/hasAccess`);
   }
   updateTradeUrl(tradeUrl: String): any {
     const headers = new HttpHeaders({
@@ -32,14 +34,14 @@ export class UserService {
     const data = {
       tradeUrl: tradeUrl
     };
-    return this.http.post('/api/updateTradeUrl', JSON.stringify(data), { headers });
+    return this.http.post(`${environment.apiUrl}/updateTradeUrl`, JSON.stringify(data), { headers });
   }
 
   keepSkin(auctionId: string): any {
     const body = {
      auctionId
     };
-    return this.http.post('/api/keepSkin', body);
+    return this.http.post(`${environment.apiUrl}/keepSkin`, body);
   }
 
   convertSkin(auctionId: string, marketName: string): any {
@@ -47,7 +49,7 @@ export class UserService {
       auctionId,
       marketName
     };
-    return this.http.post('/api/convertSkin', body);
+    return this.http.post(`${environment.apiUrl}/convertSkin`, body);
   }
 
   getSkinValue(skinName: string): any {
@@ -55,41 +57,41 @@ export class UserService {
       params: new HttpParams()
         .set('skinName', skinName)
     };
-    return this.http.get('/api/getSkinTokenValue', options);
+    return this.http.get(`${environment.apiUrl}/getSkinTokenValue`, options);
   }
 
   hideCookiePolicy(): any {
-    return this.http.get('/api/hideCookiePolicy');
+    return this.http.get(`${environment.apiUrl}/hideCookiePolicy`);
   }
 
   getUserInfo(): any {
-    return this.http.get('/api/getUserInfo');
+    return this.http.get(`${environment.apiUrl}/getUserInfo`);
   }
 
   getUserWins(): any {
-    return this.http.get('/api/getUserWins');
+    return this.http.get(`${environment.apiUrl}/getUserWins`);
   }
 
   getLeaderboard(): any {
-    return this.http.get('/api/leaderboard');
+    return this.http.get(`${environment.apiUrl}/leaderboard`);
   }
 
   transferTokens(receiver) : any{
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('api/transferTokens', JSON.stringify(receiver), { headers });
+    return this.http.post(`${environment.apiUrl}/transferTokens`, JSON.stringify(receiver), { headers });
   }
 
   removeListing(listing): any {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('api/userUnlist', JSON.stringify(listing), { headers });
+    return this.http.post(`${environment.apiUrl}/userUnlist`, JSON.stringify(listing), { headers });
   }
 
   listAuction(listingId): any {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('api/userList', {listingId}, { headers });
+    return this.http.post(`${environment.apiUrl}/userList`, {listingId}, { headers });
   }
 
   createTicket(ticket, images): any {
@@ -100,7 +102,7 @@ export class UserService {
     const formData: FormData = new FormData();
     formData.append('images', images);
     console.log(images);
-    return this.http.post('api/userCreateTicket', formData ,  options);
+    return this.http.post(`${environment.apiUrl}/userCreateTicket`, formData ,  options);
   }
 
   async getTicketImage(ticketNum, messageNum, imageName): Promise<Blob> {
@@ -113,7 +115,7 @@ export class UserService {
     responseType: 'blob' as 'json'
     };
     //May need to add blob
-    return this.http.get<Blob>('/api/ticketImage', options).toPromise();
+    return this.http.get<Blob>(`${environment.apiUrl}/ticketImage`, options).toPromise();
   }
 
   ticketUpdate(ticketRes, images): any {
@@ -122,16 +124,16 @@ export class UserService {
       params: new HttpParams().set('ticket', JSON.stringify(ticketRes))
     };
 
-    return this.http.post('api/userTicketReply', images, options);
+    return this.http.post(`${environment.apiUrl}/userTicketReply`, images, options);
   }
 
    createAffiliateCode(code): any{
     const options = { params: new HttpParams().set('code', code)};
-    return this.http.get("api/createCode", options);
+    return this.http.get(`${environment.apiUrl}/createCode`, options);
    }
 
    useAffiliateCode(code): any{
     const options = { params: new HttpParams().set('code', code)};
-    return this.http.get("api/useCode", options);
+    return this.http.get(`${environment.apiUrl}/useCode`, options);
    }
 }

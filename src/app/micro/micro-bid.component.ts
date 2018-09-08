@@ -40,26 +40,37 @@ export class MicroBidComponent implements OnInit {
     this.Moment = moment;
 
   }
-  ngOnInit() {
-    this.userService.currentUser.subscribe(user=>this.user = user);
-    this.service.getAllAuctions().subscribe(auc =>{
-    this.auctions = auc;
-    _.forEach(this.auctions, (auc) =>{
-      if (auc.auctionLive) {
-      const date = new Date(auc.startDate).toDateString();
-      auc.startDate = date;
-      const UTCTime = new Date();
-      auc.userAutoBid = false;
-      auc.tokenLimit = -1;
-      auc.userSpentTokens = 0;
-      const diff = ((( UTCTime.getTime() - auc.startTimeMS ) / 1000)); //Finds difference in start time and current
-      auc.timeRemaining = (auc.initialStartTime - diff) + auc.totalTimeAdded;
-      }
-    else{
-      auc.startCountdown = ((( auc.startTimeMS - new Date().getTime() ) / 1000));
+  async ngOnInit() {
+
+    try{
+      this.userService.currentUser.subscribe(user=>this.user = user);
+      const auctions = await this.service.getAllAuctions();
+      console.log(auctions)
     }
-    });
-  });
+    catch(err) {
+      console.log(err);
+    }
+    
+
+    
+  //   this.service.getAllAuctions().subscribe(auc =>{
+  //   this.auctions = auc;
+  //   _.forEach(this.auctions, (auc) =>{
+  //     if (auc.auctionLive) {
+  //     const date = new Date(auc.startDate).toDateString();
+  //     auc.startDate = date;
+  //     const UTCTime = new Date();
+  //     auc.userAutoBid = false;
+  //     auc.tokenLimit = -1;
+  //     auc.userSpentTokens = 0;
+  //     const diff = ((( UTCTime.getTime() - auc.startTimeMS ) / 1000)); //Finds difference in start time and current
+  //     auc.timeRemaining = (auc.initialStartTime - diff) + auc.totalTimeAdded;
+  //     }
+  //   else{
+  //     auc.startCountdown = ((( auc.startTimeMS - new Date().getTime() ) / 1000));
+  //   }
+  //   });
+  // });
 
   this.userService.socket.on('bidUpdate', ({id, price, time, bid, bids, ...data}) => {
 

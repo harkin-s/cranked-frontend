@@ -7,7 +7,7 @@ export class AdminService {
   constructor(private http: Http) { }
 
   getTickets(): any {
-    return this.http.get('/api/allTickets').toPromise()
+    return this.http.get('${environment.apiUrl}/allTickets').toPromise()
   }
 
   sendReply(data): any {
@@ -15,7 +15,7 @@ export class AdminService {
     headers.append('Content-Type', 'application/json');
 
     return this.http
-    .put('/api/staffTicketReply', JSON.stringify(data), { headers: headers })
+    .put('${environment.apiUrl}/staffTicketReply', JSON.stringify(data), { headers: headers })
     .toPromise();
   }
 
@@ -24,7 +24,7 @@ export class AdminService {
     headers.append('Content-Type', 'application/json');
 
     return this.http
-    .put('/api/closeTicket', JSON.stringify(id), { headers: headers })
+    .put('${environment.apiUrl}/closeTicket', JSON.stringify(id), { headers: headers })
     .toPromise();
   }
   uploadFile(file, id, messNum): any {
@@ -35,7 +35,7 @@ export class AdminService {
     params.set('messageNum', messNum);
 
     return this.http
-    .post('/api/uploadFile', file, { headers: headers, params: params })
+    .post('${environment.apiUrl}/uploadFile', file, { headers: headers, params: params })
     .toPromise();
   }
 
@@ -50,28 +50,28 @@ export class AdminService {
       params: params
     });
     options.responseType = ResponseContentType.Blob;
-    return this.http.get('/api/ticketImage', options).toPromise();
+    return this.http.get('${environment.apiUrl}/ticketImage', options).toPromise();
   }
 
   getAdmListings(): any {
-    return this.http.get('/api/admListings').toPromise()  
+    return this.http.get('${environment.apiUrl}/admListings').toPromise()  
   }
 
   cancelListing(listing): any {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('/api/cancelListing', JSON.stringify(listing), {headers: headers}).toPromise();
+    return this.http.post('${environment.apiUrl}/cancelListing', JSON.stringify(listing), {headers: headers}).toPromise();
   }
 
   modifyListing(listing): any {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('/api/modifyListing', JSON.stringify(listing), { headers: headers});
+    return this.http.post('${environment.apiUrl}/modifyListing', JSON.stringify(listing), { headers: headers});
   }
 
   removeFromAdm(listing): any {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('/api/removeFromAdm', JSON.stringify(listing), { headers: headers});
+    return this.http.post('${environment.apiUrl}/removeFromAdm', JSON.stringify(listing), { headers: headers});
   }
 }

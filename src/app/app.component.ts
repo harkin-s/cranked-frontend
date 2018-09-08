@@ -18,25 +18,28 @@ export class AppComponent {
 
   constructor(private service: UserService ,private authService: AuthGuard) {
   }
-  ngOnInit() {
+  async ngOnInit() {
     
     this.service.currentUser.subscribe(user => this.user = user);
-    this.service.getUser().subscribe(res => {
-    if(res.user) {
-    this.user = res.user;
-    this.user.highRoller = false;
-    this.userLogged = true;
-    this.showCookies = this.user.showCookiePolicy !== undefined ? this.user.showCookiePolicy : true ;
-    this.service.updateUser(this.user);
-    localStorage.setItem('currentUser', JSON.stringify(res));
-    this.service.socket.emit('setUserId', this.user.userid);
 
-    this.service.checkAccess().subscribe(res=>{
-      if(res)
-        this.user.hasAccess = true;
-    })
-    }
-    });
+
+    const user = await this.service.getUser();
+    // this.service.getUser().subscribe(res => {
+    // if(res.user) {
+    // this.user = res.user;
+    // this.user.highRoller = false;
+    // this.userLogged = true;
+    // this.showCookies = this.user.showCookiePolicy !== undefined ? this.user.showCookiePolicy : true ;
+    // this.service.updateUser(this.user);
+    // localStorage.setItem('currentUser', JSON.stringify(res));
+    // this.service.socket.emit('setUserId', this.user.userid);
+
+    // this.service.checkAccess().subscribe(res=>{
+    //   if(res)
+    //     this.user.hasAccess = true;
+    // })
+    // }
+    // });
 
     this.service.socket.on('auctionWin',(auc)=>{
     document.getElementById('openWinModal').click();
