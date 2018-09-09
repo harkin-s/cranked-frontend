@@ -21,8 +21,8 @@
           <i class="fa" [ngClass]="{'fa-sort': column != 'username', 'fa-sort-asc': (column == 'username' && isDesc), 'fa-sort-desc': (column == 'username' && !isDesc) }"
             aria-hidden="true"> </i>
         </th>
-        <th (click)="sort('userid')">Steam ID
-          <i class="fa" [ngClass]="{'fa-sort': column != 'userid', 'fa-sort-asc': (column == 'userid' && isDesc), 'fa-sort-desc': (column == 'userid' && !isDesc) }"
+        <th (click)="sort('userId')">Steam ID
+          <i class="fa" [ngClass]="{'fa-sort': column != 'userId', 'fa-sort-asc': (column == 'userId' && isDesc), 'fa-sort-desc': (column == 'userId' && !isDesc) }"
             aria-hidden="true"> </i>
         </th>
         <th (click)="sort('tokensPurchased')">Tokens Purchased
@@ -51,7 +51,7 @@
       <tr (click)="selectUser(user)" >
         <td>{{user._id}}</td>
         <td>{{user.username}}</td>
-        <td>{{user.userid}}</td>
+        <td>{{user.userId}}</td>
         <td>{{user.tokensPurchased}}</td>
         <td>{{user.tokensSpent}}</td>
         <td>{{user.tokens}}</td>

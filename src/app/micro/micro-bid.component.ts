@@ -84,7 +84,7 @@ export class MicroBidComponent implements OnInit {
      });
 
      const autoBidItem = this.autoBidItems[id];
-     if (autoBidItem && bids[0].userid === this.user.userid && autoBidItem.maxAmt < autoBidItem.amtSpent + autoBidItem.bidCost) {
+     if (autoBidItem && bids[0].userId === this.user.userId && autoBidItem.maxAmt < autoBidItem.amtSpent + autoBidItem.bidCost) {
       this.bid(autoBidItem);
      }
     });
@@ -137,7 +137,7 @@ export class MicroBidComponent implements OnInit {
     if(this.user.tokens >= skin.bidCost){
       let bid = {
         userName: this.user.username,
-        userId: this.user.userid,
+        userId: this.user.userId,
         aucId: skin._id
       };this.userService.socket.emit('bid',bid);
     this.user.tokens -= skin.bidCost;
@@ -164,8 +164,8 @@ export class MicroBidComponent implements OnInit {
     // if(this.autoBidOn){
     //   this.timer = setInterval(()=>{
     //     for(let auc of this.auctions){
-    //       let userId = auc.bids.length > 0 ? auc.bids[auc.bids.length-1].userid : null;
-    //       if((auc.userAutoBid && (userId !== this.user.userid) || userId == null) ){
+    //       let userId = auc.bids.length > 0 ? auc.bids[auc.bids.length-1].userId : null;
+    //       if((auc.userAutoBid && (userId !== this.user.userId) || userId == null) ){
     //         if(auc.tokenLimit < 0){
     //            this.bid(item);
     //         }

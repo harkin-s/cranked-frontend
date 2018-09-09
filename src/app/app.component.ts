@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './shared/user.service';
 import { AuthGuard } from './shared/auth-guard.service';
+import {User} from './user';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,8 @@ import { AuthGuard } from './shared/auth-guard.service';
 })
 
 export class AppComponent {
-  user: any;
-  userLogged: Boolean =false;
+  user: User = new User(null, false, null, false) ;
+  userLogged: Boolean = false;
   tradeUrl: String;
   tradeUrlInvalid: Boolean = false;
   auctionWon: any;
@@ -19,33 +20,24 @@ export class AppComponent {
   constructor(private service: UserService ,private authService: AuthGuard) {
   }
   async ngOnInit() {
+
+    const {user:user} = await this.service.getUser();
     
-    this.service.currentUser.subscribe(user => this.user = user);
+    if(user) {
+      this.user = new User(user.userId, false, user.tokens, user.showCookiePolicy);
+      this.service.updateUser(this.user);
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      this.service.socket.emit('setuserId', this.user.userId);
+    }
 
-
-    const user = await this.service.getUser();
-    // this.service.getUser().subscribe(res => {
-    // if(res.user) {
-    // this.user = res.user;
-    // this.user.highRoller = false;
-    // this.userLogged = true;
-    // this.showCookies = this.user.showCookiePolicy !== undefined ? this.user.showCookiePolicy : true ;
-    // this.service.updateUser(this.user);
-    // localStorage.setItem('currentUser', JSON.stringify(res));
-    // this.service.socket.emit('setUserId', this.user.userid);
-
-    // this.service.checkAccess().subscribe(res=>{
-    //   if(res)
-    //     this.user.hasAccess = true;
-    // })
-    // }
-    // });
+   console.log(this.user)
 
     this.service.socket.on('auctionWin',(auc)=>{
     document.getElementById('openWinModal').click();
     document.title = 'Winner !!';
     this.auctionWon = auc;
   });
+
   }
 
   updateUrl(){
@@ -70,7 +62,7 @@ export class AppComponent {
   }
 
   hideCookiePolicy(){
-    if(this.user.length !== undefined){
+    if(this.user.showCookiePolicy !== undefined){
       this.service.hideCookiePolicy().subscribe(res=>{
         this.showCookies = false;
       });

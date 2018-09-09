@@ -93,7 +93,7 @@
             </div>
             <div [hidden]="!auction.winnerID" class="alert alert-info alert-dismissable">
               <a (click)="removeAlert(auction)" class="close" aria-label="close">×</a>
-              <strong>Auction Won by</strong> {{auction.userID}}
+              <strong>Auction Won by</strong> {{auction.userId}}
             </div>
           </div>
           <div *ngIf="!auction.auctionLive">

@@ -81,7 +81,7 @@ export class TokensComponent implements OnInit, AfterViewInit {
         // Send the asset ids and user id to the bot to initiate the trade
         const tradeData = {
             assetIds: assetIds,
-            userId: this.user.userid
+            userId: this.user.userId
         }
         this.socket.emit('depositSkin', tradeData);
 

@@ -67,7 +67,7 @@ constructor(private userListService: UserListService) {
 
   giveTokens(){
     let data ={
-      userid: this.user._id,
+      userId: this.user._id,
       tokens: this.tokens
     }
     this.userListService.giveTokens(data).then();
@@ -75,7 +75,7 @@ constructor(private userListService: UserListService) {
   }
   banUser(value){
     let data = {
-      userid: this.user._id,
+      userId: this.user._id,
       value: value
     };
     this.userListService.banUser(data).then();
@@ -83,7 +83,7 @@ constructor(private userListService: UserListService) {
   }
   takeTokens(){
     let data ={
-      userid: this.user._id,
+      userId: this.user._id,
       tokens: this.tokens
     }
     this.userListService.takeTokens(data).then();
