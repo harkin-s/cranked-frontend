@@ -9,7 +9,15 @@ export class ListingsService{
     constructor(private http: HttpClient ){}
 
     getListings(): any{
-        return this.http.get(`${environment.apiUrl}/getListings`).toPromise();
+        try{
+            const res = this.http.get(`${environment.apiUrl}/getListings`).toPromise();
+            return res;
+        }
+        catch(err){
+            console.log(err);
+            return {}
+        }
+
     }
 
 

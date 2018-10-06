@@ -14,11 +14,9 @@ search: String = '';
 originalListings : any = null;
   constructor(private listingService : ListingsService) { }
 
-  ngOnInit() {
-    this.listingService.getListings().subscribe(res=>{
-      this.listings = res;
-      this.originalListings = res;
-    });
+  async ngOnInit() {
+    this.listings = await this.listingService.getListings();
+    this.originalListings = this.listings;
   }
 
   filter(){
